@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nome:</b>
+  <%= @pesquisa.nome %>
+</p>
+
+<p>
+  <b>Slug:</b>
+  <%= @pesquisa.slug %>
+</p>
+
+
+<%= link_to 'Edit', edit_pesquisa_path(@pesquisa) %> |
+<%= link_to 'Back', pesquisas_path %>

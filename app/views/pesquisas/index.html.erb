@@ -1,0 +1,25 @@
+<h1>Listing pesquisas</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Slug</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pesquisas.each do |pesquisa| %>
+  <tr>
+    <td><%= pesquisa.nome %></td>
+    <td><%= pesquisa.slug %></td>
+    <td><%= link_to 'Show', pesquisa %></td>
+    <td><%= link_to 'Edit', edit_pesquisa_path(pesquisa) %></td>
+    <td><%= link_to 'Destroy', pesquisa, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pesquisa', new_pesquisa_path %>

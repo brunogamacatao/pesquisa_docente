@@ -1,4 +1,10 @@
 PesquisaDocente::Application.routes.draw do
+  resources :respostas
+
+  resources :perguntas
+
+  resources :pesquisas
+
   resources :turmas
 
   resources :alunos

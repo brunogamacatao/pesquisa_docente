@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pergunta: MyString
+  ordem: 1
+  pesquisa_id: 1
+
+two:
+  pergunta: MyString
+  ordem: 1
+  pesquisa_id: 1

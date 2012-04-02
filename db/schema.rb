@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120402140557) do
+ActiveRecord::Schema.define(:version => 20120402144757) do
 
   create_table "alunos", :force => true do |t|
     t.string   "nome"
@@ -21,10 +21,10 @@ ActiveRecord::Schema.define(:version => 20120402140557) do
   end
 
   create_table "alunos_turmas", :force => true do |t|
-    t.integer  "id_aluno"
-    t.integer  "id_turma"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "aluno_id"
+    t.integer  "turma_id"
   end
 
   create_table "cursos", :force => true do |t|
@@ -48,10 +48,43 @@ ActiveRecord::Schema.define(:version => 20120402140557) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "perguntas", :force => true do |t|
+    t.string   "pergunta"
+    t.integer  "ordem"
+    t.integer  "pesquisa_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "pesquisas", :force => true do |t|
+    t.string   "nome"
+    t.string   "slug"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "professores", :force => true do |t|
     t.string   "nome"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "resposta", :force => true do |t|
+    t.integer  "nota"
+    t.integer  "pergunta_id"
+    t.integer  "aluno_id"
+    t.integer  "turma_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "respostas", :force => true do |t|
+    t.integer  "nota"
+    t.integer  "pergunta_id"
+    t.integer  "turma_id"
+    t.integer  "aluno_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "turmas", :force => true do |t|

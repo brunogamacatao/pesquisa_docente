@@ -1,0 +1,27 @@
+<h1>Listing perguntas</h1>
+
+<table>
+  <tr>
+    <th>Pergunta</th>
+    <th>Ordem</th>
+    <th>Pesquisa</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @perguntas.each do |pergunta| %>
+  <tr>
+    <td><%= pergunta.pergunta %></td>
+    <td><%= pergunta.ordem %></td>
+    <td><%= pergunta.pesquisa_id %></td>
+    <td><%= link_to 'Show', pergunta %></td>
+    <td><%= link_to 'Edit', edit_pergunta_path(pergunta) %></td>
+    <td><%= link_to 'Destroy', pergunta, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Pergunta', new_pergunta_path %>

@@ -1,0 +1,29 @@
+<h1>Listing respostas</h1>
+
+<table>
+  <tr>
+    <th>Nota</th>
+    <th>Pergunta</th>
+    <th>Turma</th>
+    <th>Aluno</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @respostas.each do |resposta| %>
+  <tr>
+    <td><%= resposta.nota %></td>
+    <td><%= resposta.pergunta_id %></td>
+    <td><%= resposta.turma_id %></td>
+    <td><%= resposta.aluno_id %></td>
+    <td><%= link_to 'Show', resposta %></td>
+    <td><%= link_to 'Edit', edit_resposta_path(resposta) %></td>
+    <td><%= link_to 'Destroy', resposta, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Resposta', new_resposta_path %>
