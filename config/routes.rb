@@ -1,4 +1,16 @@
 PesquisaDocente::Application.routes.draw do
+  resources :turmas
+
+  resources :alunos
+
+  resources :professores
+
+  resources :disciplinas
+
+  resources :cursos
+
+  resources :instituicoes
+
   root :to => 'main#index'
 
   # The priority is based upon order of creation:

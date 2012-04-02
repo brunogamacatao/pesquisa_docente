@@ -1,0 +1,29 @@
+<h1>Listing turmas</h1>
+
+<table>
+  <tr>
+    <th>Turno</th>
+    <th>Horario</th>
+    <th>Professor</th>
+    <th>Disciplina</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @turmas.each do |turma| %>
+  <tr>
+    <td><%= turma.turno %></td>
+    <td><%= turma.horario %></td>
+    <td><%= turma.professor_id %></td>
+    <td><%= turma.disciplina_id %></td>
+    <td><%= link_to 'Show', turma %></td>
+    <td><%= link_to 'Edit', edit_turma_path(turma) %></td>
+    <td><%= link_to 'Destroy', turma, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Turma', new_turma_path %>

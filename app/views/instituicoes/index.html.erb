@@ -1,0 +1,25 @@
+<h1>Listing instituicoes</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Sigla</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @instituicoes.each do |instituicao| %>
+  <tr>
+    <td><%= instituicao.nome %></td>
+    <td><%= instituicao.sigla %></td>
+    <td><%= link_to 'Show', instituicao %></td>
+    <td><%= link_to 'Edit', edit_instituicao_path(instituicao) %></td>
+    <td><%= link_to 'Destroy', instituicao, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Instituicao', new_instituicao_path %>
