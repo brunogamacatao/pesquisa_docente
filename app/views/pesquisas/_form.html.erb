@@ -1,4 +1,4 @@
-<%= form_for(@pesquisa) do |f| %>
+<%= nested_form_for(@pesquisa) do |f| %>
   <% if @pesquisa.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@pesquisa.errors.count, "error") %> prohibited this pesquisa from being saved:</h2>
@@ -19,6 +19,16 @@
     <%= f.label :slug %><br />
     <%= f.text_field :slug %>
   </div>
+  
+  <%= f.fields_for :perguntas do |pergunta_form| %>
+    <%= pergunta_form.label :ordem %>
+    <%= pergunta_form.text_field :ordem %><br/>
+    <%= pergunta_form.label :pergunta_form %>
+    <%= pergunta_form.text_field :pergunta %><br/>
+    <%= pergunta_form.link_to_remove "Remover" %>
+  <% end %>
+  <p><%= f.link_to_add "Adicionar", :perguntas %></p>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

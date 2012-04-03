@@ -1,0 +1,24 @@
+<h1>Pesquisa: <%= @pesquisa.nome %></h1>
+<h3>Disciplina: <%= @turma.disciplina.nome %></h3>
+<h3>Professor: <%= @turma.professor.nome %></h3>
+<h3>Aluno:  <%= @aluno.nome %></h3>
+<%= form_tag(:action => "enviar_respostas") do %>
+  <%= hidden_field_tag "id", @pesquisa.id %>
+  <%= hidden_field_tag "matricula", @aluno.matricula %>
+  <table>
+    <% @pesquisa.perguntas.each_with_index do |pergunta, idx| %>
+      <tr>
+        <td>
+          <%= hidden_field_tag "respostas[#{idx}][pergunta_id]", pergunta.id %>
+          <%= hidden_field_tag "respostas[#{idx}][aluno_id]", @aluno.id %>
+          <%= hidden_field_tag "respostas[#{idx}][turma_id]", @turma.id %>
+          <%= pergunta.pergunta %>
+        </td>
+        <td>
+          <%= text_field_tag "respostas[#{idx}][nota]" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+  <%= submit_tag 'Enviar Respostas' %>
+<% end %>

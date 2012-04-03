@@ -1,0 +1,9 @@
+<h1><%= @pesquisa.nome %></h1>
+
+<%= form_tag(:action => "iniciar_respostas") do %>
+  <%= hidden_field_tag 'id', @pesquisa.id %>
+  <%= label_tag 'matricula', 'Matrícula' %>
+  <%= text_field_tag 'matricula' %>
+  <br/>
+  <%= submit_tag 'Responder Pesquisa' %>
+<% end %>
