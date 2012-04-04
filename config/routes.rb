@@ -1,4 +1,6 @@
 PesquisaDocente::Application.routes.draw do
+  devise_for :usuarios
+
   root :to => 'responder_pesquisa#responder_pesquisa'
   
   match 'responder_pesquisa'     => 'responder_pesquisa#responder_pesquisa'

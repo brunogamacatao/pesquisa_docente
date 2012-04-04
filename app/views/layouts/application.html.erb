@@ -31,6 +31,19 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#">Pesquisa Docente</a>
+          
+          <ul class="nav">
+            <li class="active">
+              <%= link_to 'Início', root_path %>
+            </li>
+            <% if usuario_signed_in? %>
+              <li><a href="#">Resultado</a></li>
+              <li><%= link_to 'Sair', destroy_usuario_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to 'Área Restrita', new_usuario_session_path %></li>
+            <% end %>
+          </ul>          
+          
         </div>
       </div>
     </div>
@@ -39,6 +52,40 @@
       <div class="content">
         <div class="row">
            <div class="span9">
+              <% if flash[:erro] %>
+               <div class="alert alert-error">
+                 <a class="close" data-dismiss="alert">×</a>
+                 <strong>Erro!</strong> <%= flash[:erro] %>
+               </div>
+              <% end %>
+              
+              <% if flash[:notice] %>
+               <div class="alert alert-info">
+                 <a class="close" data-dismiss="alert">×</a>
+                 <strong>Atenção!</strong> <%= flash[:notice] %>
+               </div>
+              <% end %>
+              
+              <% if flash[:alert] %>
+               <div class="alert">
+                 <a class="close" data-dismiss="alert">×</a>
+                 <strong>Atenção!</strong> <%= flash[:alert] %>
+               </div>
+              <% end %>
+
+              <% if flash[:atencao] %>
+               <div class="alert">
+                 <a class="close" data-dismiss="alert">×</a>
+                 <strong>Atenção!</strong> <%= flash[:atencao] %>
+               </div>
+              <% end %>
+
+              <% if flash[:sucesso] %>
+               <div class="alert alert-success">
+                 <a class="close" data-dismiss="alert">×</a>
+                 <strong>Parabéns!</strong> <%= flash[:sucesso] %>
+               </div>
+              <% end %>
               <%= yield %>
             </div>
             <div class="span3">
