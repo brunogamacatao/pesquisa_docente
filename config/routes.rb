@@ -1,4 +1,11 @@
 PesquisaDocente::Application.routes.draw do
+  root :to => 'responder_pesquisa#responder_pesquisa'
+  
+  match 'responder_pesquisa'     => 'responder_pesquisa#responder_pesquisa'
+  match 'responder_pesquisa/:id' => 'responder_pesquisa#responder_pesquisa'
+  match 'iniciar_respostas'      => 'responder_pesquisa#iniciar_respostas'
+  match 'enviar_respostas'       => 'responder_pesquisa#enviar_respostas'
+  
   resources :respostas
 
   resources :perguntas
@@ -16,14 +23,7 @@ PesquisaDocente::Application.routes.draw do
   resources :cursos
 
   resources :instituicoes
-
-  root :to => 'main#index'
   
-  match 'responder_pesquisa/:id' => 'responder_pesquisa#responder_pesquisa'
-  match 'iniciar_respostas' => 'responder_pesquisa#iniciar_respostas'
-  match 'enviar_respostas' => 'responder_pesquisa#enviar_respostas'
-  match 'pesquisa_finalizada' => 'responder_pesquisa#pesquisa_finalizada'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

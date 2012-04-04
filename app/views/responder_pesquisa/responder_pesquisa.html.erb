@@ -1,9 +1,32 @@
+<% if flash[:erro] %>
+  <div class="alert alert-error">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Erro!</strong> <%= flash[:erro] %>
+  </div>
+<% end %>
+
+<% if flash[:atencao] %>
+  <div class="alert">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Atenção!</strong> <%= flash[:atencao] %>
+  </div>
+<% end %>
+
+<% if flash[:sucesso] %>
+  <div class="alert alert-success">
+    <a class="close" data-dismiss="alert">×</a>
+    <strong>Parabéns!</strong> <%= flash[:sucesso] %>
+  </div>
+<% end %>
+
 <h1><%= @pesquisa.nome %></h1>
 
-<%= form_tag(:action => "iniciar_respostas") do %>
+<br/>
+
+<%= form_tag({:action => "iniciar_respostas"}, {:class => 'well'}) do %>
   <%= hidden_field_tag 'id', @pesquisa.id %>
   <%= label_tag 'matricula', 'Matrícula' %>
-  <%= text_field_tag 'matricula' %>
+  <%= text_field_tag 'matricula', nil, :placeholder => 'Digite aqui a sua matrícula', :class => 'validate[required]' %>
   <br/>
-  <%= submit_tag 'Responder Pesquisa' %>
+  <%= submit_tag 'Responder Pesquisa', :class => 'btn' %>
 <% end %>
