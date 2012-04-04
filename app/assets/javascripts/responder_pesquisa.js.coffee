@@ -3,10 +3,10 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-  $("form").validationEngine
+  $("form").validationEngine()
   if $(".alert")
     $(".alert").slideDown('fast')
     callback = -> $(".alert").slideUp()
     setTimeout callback, 5000
   $("#matricula").mask("999999")
-  $("#matricula").focus
+  $("#matricula").focus()
