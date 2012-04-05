@@ -39,10 +39,10 @@ class ResponderPesquisaController < ApplicationController
     @atual = 0
     
     @aluno.respostas.each do |resposta|
-      @atual = @atual + 1 if turmas.delete(resposta.turma)
+      @atual += 1 if turmas.delete(resposta.turma)
     end
     
-    @atual = @atual + 1
+    @atual += 1
     @progresso = @atual.to_f / @total.to_f * 100.0 if @total > 0
     
     unless turmas.empty?

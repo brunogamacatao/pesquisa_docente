@@ -1,0 +1,17 @@
+<h3>Progresso da Pesquisa</h3>
+<p><%= @total_respostas %> de <%= @total_alunos %> responderam</p>
+<div class="progress progress-striped progress-success active">
+  <div class="bar" style="width: <%= number_to_percentage @percentual, :precision => 0 %>;"></div>
+</div>
+<hr/>
+<h3>Instituições</h3>
+<ul>
+  <% @instituicoes.each do |instituicao| %>
+  <li>
+    <%= link_to "#{instituicao.sigla} (#{instituicao.total_alunos_responderam} de #{instituicao.total_alunos})", :action => 'resultado_por_instituicao', :id => instituicao.id %>
+    <div class="progress progress-striped active">
+      <div class="bar" style="width: <%= number_to_percentage instituicao.percentual_responderam, :precision => 0 %>;"></div>
+    </div>
+  </li>
+  <% end %>  
+</ul>

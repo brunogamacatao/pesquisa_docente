@@ -1,0 +1,14 @@
+<h3><%= @curso.nome %></h3>
+<p><%= @curso.total_alunos_responderam %> de <%= @curso.total_alunos %> responderam</p>
+<div class="progress progress-striped progress-success active">
+  <div class="bar" style="width: <%= number_to_percentage @curso.percentual_responderam, :precision => 0 %>;"></div>
+</div>
+<hr/>
+<h3>Turmas</h3>
+<ul>
+  <% @curso.turmas.each do |turma| %>
+  <li>
+    <%= "#{turma.professor.nome} - #{turma.disciplina.nome} #{turma.turno} #{turma.horario} (#{turma.total_alunos_responderam} de #{turma.total_alunos})" %>
+  </li>
+  <% end %>  
+</ul>
