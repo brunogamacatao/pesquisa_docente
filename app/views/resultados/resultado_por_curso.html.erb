@@ -25,7 +25,7 @@
 <ul>
   <% @curso.turmas.each do |turma| %>
   <li>
-    <%= "#{turma.professor.nome} - #{turma.disciplina.nome} #{turma.turno} #{turma.horario} (#{turma.total_alunos_responderam} de #{turma.total_alunos})" %>
+    <%= link_to "#{turma.professor.nome} - #{turma.disciplina.nome} #{turma.turno} #{turma.horario} (#{turma.total_alunos_responderam} de #{turma.total_alunos})", :action => 'resultado_por_turma', :id => turma.id %>
   </li>
   <% end %>  
 </ul>

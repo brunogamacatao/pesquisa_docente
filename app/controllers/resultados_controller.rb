@@ -25,4 +25,10 @@ class ResultadosController < ApplicationController
     @perguntas = @pesquisa.perguntas.order(:ordem)
     @curso     = Curso.find(params[:id])
   end
+  
+  def resultado_por_turma
+    @pesquisa  = Pesquisa.last
+    @perguntas = @pesquisa.perguntas.order(:ordem)
+    @turma     = Turma.find(params[:id])
+  end
 end

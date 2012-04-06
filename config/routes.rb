@@ -10,6 +10,7 @@ PesquisaDocente::Application.routes.draw do
   match 'resultado'               => 'resultados#index'
   match 'resultado/:id'           => 'resultados#resultado_por_instituicao'
   match 'resultado_por_curso/:id' => 'resultados#resultado_por_curso'
+  match 'resultado_por_turma/:id' => 'resultados#resultado_por_turma'
   
   resources :perguntas
   resources :pesquisas

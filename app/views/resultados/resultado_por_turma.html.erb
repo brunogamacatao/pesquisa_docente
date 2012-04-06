@@ -1,0 +1,20 @@
+<h3><%= "#{@turma.professor.nome} - #{@turma.disciplina.nome} #{@turma.turno} #{@turma.horario}" %></h3>
+
+<p><%= @turma.total_alunos_responderam %> de <%= @turma.total_alunos %> responderam</p>
+<div class="progress progress-striped progress-success active">
+  <div class="bar" style="width: <%= number_to_percentage @turma.percentual_responderam, :precision => 0 %>;"></div>
+</div>
+
+<hr/>
+
+<h3><%= @pesquisa.nome %></h3>
+<ol>
+<% @perguntas.each do |pergunta| %>
+  <li>
+    <%= pergunta.pergunta %> &nbsp;
+    <div class="progress progress-alert">
+      <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_turma(@turma) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_turma(@turma), :precision => 1, :separator => ',' %></p></div>
+    </div>
+  </li>
+<% end %>
+</ol>
