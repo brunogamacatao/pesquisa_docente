@@ -1,4 +1,6 @@
 class ResultadosController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   def index
     @pesquisa        = Pesquisa.last
     @perguntas       = @pesquisa.perguntas.order(:ordem)

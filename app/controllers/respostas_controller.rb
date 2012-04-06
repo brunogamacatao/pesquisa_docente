@@ -1,4 +1,6 @@
 class RespostasController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /respostas
   # GET /respostas.json
   def index

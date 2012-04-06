@@ -1,4 +1,6 @@
 class InstituicoesController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /instituicoes
   # GET /instituicoes.json
   def index

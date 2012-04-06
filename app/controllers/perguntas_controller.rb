@@ -1,4 +1,6 @@
 class PerguntasController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /perguntas
   # GET /perguntas.json
   def index

@@ -1,4 +1,6 @@
 class TurmasController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /turmas
   # GET /turmas.json
   def index

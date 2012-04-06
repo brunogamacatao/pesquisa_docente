@@ -1,4 +1,6 @@
 class ProfessoresController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /professores
   # GET /professores.json
   def index

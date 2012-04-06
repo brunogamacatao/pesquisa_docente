@@ -1,4 +1,6 @@
 class DisciplinasController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /disciplinas
   # GET /disciplinas.json
   def index

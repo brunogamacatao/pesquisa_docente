@@ -1,14 +1,18 @@
 # encoding: utf-8
 class ResponderPesquisaController < ApplicationController
   def responder_pesquisa
-    if params[:id]
-      @pesquisa = Pesquisa.find(params[:id])
-      unless @pesquisa
-        flash[:erro] = "Não foi encontrada uma pesquisa com o identificador indicado"
-        redirect_to :action => "responder_pesquisa"
-      end
+    if usuario_signed_in?
+      redirect_to :action => 'index', :controller => 'resultados'
     else
-      @pesquisa = Pesquisa.first(:order => 'created_at DESC')
+      if params[:id]
+        @pesquisa = Pesquisa.find(params[:id])
+        unless @pesquisa
+          flash[:erro] = "Não foi encontrada uma pesquisa com o identificador indicado"
+          redirect_to :action => "responder_pesquisa"
+        end
+      else
+        @pesquisa = Pesquisa.first(:order => 'created_at DESC')
+      end
     end
   end
   
