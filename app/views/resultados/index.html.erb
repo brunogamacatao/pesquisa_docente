@@ -3,6 +3,21 @@
 <div class="progress progress-striped progress-success active">
   <div class="bar" style="width: <%= number_to_percentage @percentual, :precision => 0 %>;"></div>
 </div>
+
+<hr/>
+
+<h3><%= @pesquisa.nome %></h3>
+<ol>
+<% @perguntas.each do |pergunta| %>
+  <li>
+    <%= pergunta.pergunta %> &nbsp;
+    <div class="progress progress-alert">
+      <div class="bar" style="width: <%= number_to_percentage pergunta.media_geral * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_geral, :precision => 1, :separator => ',' %></p></div>
+    </div>
+  </li>
+<% end %>
+</ol>
+
 <hr/>
 <h3>Instituições</h3>
 <ul>

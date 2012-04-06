@@ -1,9 +1,6 @@
 require 'set'
 
 class Curso < ActiveRecord::Base
-  @@cache_total_alunos = {}
-  @@cache_total_alunos_responderam = {}
-  
   belongs_to :instituicao
   has_many :disciplinas
   
@@ -18,40 +15,32 @@ class Curso < ActiveRecord::Base
     turmas
   end
   
-  def alunos
-    alunos = Set.new
-    self.disciplinas.each do |disciplina|
-      disciplina.turmas.each do |turma|
-        alunos.merge(turma.alunos)
-      end
-    end
-    alunos
-  end
-  
   def total_alunos
-    unless @@cache_total_alunos[self.id]
-      @@cache_total_alunos[self.id] = self.alunos.count
-    end
-    @@cache_total_alunos[self.id]
+    result = connection.select_one "SELECT COUNT(*) AS total FROM
+    (SELECT DISTINCT a.id 
+    FROM cursos c 
+    INNER JOIN disciplinas d ON d.curso_id = c.id 
+    INNER JOIN turmas t ON t.disciplina_id = d.id 
+    INNER JOIN alunos_turmas at ON at.turma_id = t.id 
+    INNER JOIN alunos a ON at.aluno_id = a.id
+    WHERE c.id = #{self.id}) t"
+    result["total"]
   end
   
   def total_alunos_responderam
-    unless @@cache_total_alunos_responderam[self.id]
-      total = 0
-      self.alunos.each do |aluno|
-        total += 1 unless aluno.respostas.empty?
-      end
-      @@cache_total_alunos_responderam[self.id] = total
-    end
-    @@cache_total_alunos_responderam[self.id]
+    result = connection.select_one "SELECT COUNT(*) AS total FROM
+    (SELECT DISTINCT a.id 
+    FROM cursos c 
+    INNER JOIN disciplinas d ON d.curso_id = c.id 
+    INNER JOIN turmas t ON t.disciplina_id = d.id 
+    INNER JOIN alunos_turmas at ON at.turma_id = t.id 
+    INNER JOIN alunos a ON at.aluno_id = a.id
+    INNER JOIN respostas r ON r.aluno_id = a.id
+    WHERE c.id = #{self.id}) t"
+    result["total"]
   end
   
   def percentual_responderam
     (self.total_alunos != 0 && self.total_alunos_responderam / self.total_alunos) || 0
-  end
-  
-  def invalidate_cache
-    @@cache_total_alunos[self.id] = nil
-    @@cache_total_alunos_responderam[self.id] = nil
   end
 end

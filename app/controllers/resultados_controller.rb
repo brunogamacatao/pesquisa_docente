@@ -1,5 +1,7 @@
 class ResultadosController < ApplicationController
   def index
+    @pesquisa        = Pesquisa.last
+    @perguntas       = @pesquisa.perguntas.order(:ordem)
     @instituicoes    = Instituicao.order(:nome)
     @total_alunos    = 0
     @total_respostas = 0
@@ -13,10 +15,14 @@ class ResultadosController < ApplicationController
   end
   
   def resultado_por_instituicao
+    @pesquisa    = Pesquisa.last
+    @perguntas   = @pesquisa.perguntas.order(:ordem)
     @instituicao = Instituicao.find(params[:id])
   end
   
   def resultado_por_curso
-    @curso = Curso.find(params[:id])
+    @pesquisa  = Pesquisa.last
+    @perguntas = @pesquisa.perguntas.order(:ordem)
+    @curso     = Curso.find(params[:id])
   end
 end
