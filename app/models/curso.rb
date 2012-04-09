@@ -41,6 +41,6 @@ class Curso < ActiveRecord::Base
   end
   
   def percentual_responderam
-    (self.total_alunos != 0 && self.total_alunos_responderam / self.total_alunos) || 0
+    (self.total_alunos != 0 && 100 * self.total_alunos_responderam / self.total_alunos) || 0
   end
 end
