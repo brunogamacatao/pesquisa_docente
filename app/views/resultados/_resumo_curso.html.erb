@@ -1,0 +1,4 @@
+<%= link_to "#{@curso.nome} (#{@curso.total_alunos_responderam} de #{@curso.total_alunos})", :action => "resultado_por_curso", :id => @curso.id %>
+<div class="progress progress-striped active">
+  <div class="bar" style="width: <%= number_to_percentage @curso.percentual_responderam, :precision => 0 %>;"></div>
+</div>

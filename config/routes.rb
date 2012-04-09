@@ -3,14 +3,15 @@ PesquisaDocente::Application.routes.draw do
 
   root :to => 'responder_pesquisa#responder_pesquisa'
   
-  match 'responder_pesquisa'      => 'responder_pesquisa#responder_pesquisa'
-  match 'responder_pesquisa/:id'  => 'responder_pesquisa#responder_pesquisa'
-  match 'iniciar_respostas'       => 'responder_pesquisa#iniciar_respostas'
-  match 'enviar_respostas'        => 'responder_pesquisa#enviar_respostas'
-  match 'resultado'               => 'resultados#index'
-  match 'resultado/:id'           => 'resultados#resultado_por_instituicao'
-  match 'resultado_por_curso/:id' => 'resultados#resultado_por_curso'
-  match 'resultado_por_turma/:id' => 'resultados#resultado_por_turma'
+  match 'responder_pesquisa'         => 'responder_pesquisa#responder_pesquisa'
+  match 'responder_pesquisa/:id'     => 'responder_pesquisa#responder_pesquisa'
+  match 'iniciar_respostas'          => 'responder_pesquisa#iniciar_respostas'
+  match 'enviar_respostas'           => 'responder_pesquisa#enviar_respostas'
+  match 'resultado'                  => 'resultados#index'
+  match 'resultado/resumo_curso/:id' => 'resultados#resumo_curso'
+  match 'resultado/:id'              => 'resultados#resultado_por_instituicao'
+  match 'resultado_por_curso/:id'    => 'resultados#resultado_por_curso'
+  match 'resultado_por_turma/:id'    => 'resultados#resultado_por_turma'
   
   resources :perguntas
   resources :pesquisas

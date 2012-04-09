@@ -20,6 +20,13 @@ class ResultadosController < ApplicationController
     @pesquisa    = Pesquisa.last
     @perguntas   = @pesquisa.perguntas.order(:ordem)
     @instituicao = Instituicao.find(params[:id])
+    
+    gon.cursos = @instituicao.cursos
+  end
+  
+  def resumo_curso
+    @curso = Curso.find(params[:id])
+    render :partial => "resultados/resumo_curso"
   end
   
   def resultado_por_curso

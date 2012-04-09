@@ -40,6 +40,7 @@ gem 'capistrano'
 
 gem "nested_form"
 gem "devise"
+gem 'gon'
 
 group :development do
   gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
