@@ -21,6 +21,10 @@ group :assets do
   gem 'twitter-bootstrap-rails'
 end
 
+group :development do
+  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
@@ -41,7 +45,4 @@ gem 'capistrano'
 gem "nested_form"
 gem "devise"
 gem 'gon'
-
-group :development do
-  gem 'annotate', :git => 'git://github.com/ctran/annotate_models.git'
-end
+gem 'redis'

@@ -21,15 +21,13 @@ class Resposta < ActiveRecord::Base
   validates :nota, :numericality => true
   validates_uniqueness_of :pergunta_id, :scope => [:aluno_id, :turma_id], :message => 'Você já respondeu a esta pergunta para esta turma.'
   
-  after_create do |resposta| 
-    Instituicao.invalidate_cache(resposta.turma.disciplina.curso.instituicao.id)
-    Curso.invalidate_cache(resposta.turma.disciplina.curso.id)
-    Turma.invalidate_cache(resposta.turma.id)
-  end
+  after_create :invalidate_cache
+  after_save :invalidate_cache
   
-  after_save do |resposta| 
-    Instituicao.invalidate_cache(resposta.turma.disciplina.curso.instituicao.id)
-    Curso.invalidate_cache(resposta.turma.disciplina.curso.id)
-    Turma.invalidate_cache(resposta.turma.id)
+  private 
+  def invalidate_cache
+    $redis.sadd(self.turma.redis_key(:alunos_responderam), self.aluno.id)
+    $redis.sadd(self.turma.disciplina.curso.redis_key(:alunos_responderam), self.aluno.id)
+    $redis.sadd(self.turma.disciplina.curso.instituicao.redis_key(:alunos_responderam), self.aluno.id)
   end
 end

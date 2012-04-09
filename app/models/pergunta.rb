@@ -30,7 +30,7 @@ class Pergunta < ActiveRecord::Base
     INNER JOIN cursos c ON d.curso_id = c.id
     INNER JOIN instituicoes i ON c.instituicao_id = i.id
     WHERE p.id = #{self.id} AND i.id = #{instituicao.id}"
-    result["media"]
+    result["media"] || 0
   end
   
   def media_por_curso(curso)
@@ -41,7 +41,7 @@ class Pergunta < ActiveRecord::Base
     INNER JOIN disciplinas d ON t.disciplina_id = d.id
     INNER JOIN cursos c ON d.curso_id = c.id
     WHERE p.id = #{self.id} AND c.id = #{curso.id}"
-    result["media"]
+    result["media"] || 0
   end
   
   def media_por_turma(turma)
@@ -50,7 +50,7 @@ class Pergunta < ActiveRecord::Base
     INNER JOIN respostas r ON r.pergunta_id = p.id
     INNER JOIN turmas t ON r.turma_id = t.id
     WHERE p.id = #{self.id} AND t.id = #{turma.id}"
-    result["media"]
+    result["media"] || 0
   end
   
 end
