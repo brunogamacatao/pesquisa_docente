@@ -40,4 +40,19 @@ class ResultadosController < ApplicationController
     @perguntas = @pesquisa.perguntas.order(:ordem)
     @turma     = Turma.find(params[:id])
   end
+  
+  def alunos_que_faltam_por_instituicao
+    @alunos = Instituicao.find(params[:id]).alunos_faltam_responder
+    render :lista_alunos
+  end
+  
+  def alunos_que_faltam_por_curso
+    @alunos = Curso.find(params[:id]).alunos_faltam_responder
+    render :lista_alunos
+  end
+  
+  def alunos_que_faltam_por_turma
+    @alunos = Turma.find(params[:id]).alunos_faltam_responder
+    render :lista_alunos
+  end
 end

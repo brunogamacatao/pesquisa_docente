@@ -26,6 +26,10 @@ class Curso < ActiveRecord::Base
     turmas
   end
   
+  def alunos_faltam_responder
+    Aluno.where(:id => $redis.sdiff(self.redis_key(:alunos), self.redis_key(:alunos_responderam))).order(:nome)
+  end
+  
   def total_alunos
     $redis.scard(self.redis_key(:alunos))
   end

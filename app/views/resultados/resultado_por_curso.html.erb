@@ -1,6 +1,10 @@
 <h3><%= @curso.nome %></h3>
 
-<p><%= @curso.total_alunos_responderam %> de <%= @curso.total_alunos %> responderam</p>
+<p>
+  <%= @curso.total_alunos_responderam %> de <%= @curso.total_alunos %> responderam
+  &nbsp;
+  <%= link_to 'Alunos que faltam responder', {:action => :alunos_que_faltam_por_curso}, :id => @curso.id, :class => "btn btn-warning" %>
+</p>
 <div class="progress progress-striped progress-success active">
   <div class="bar" style="width: <%= number_to_percentage @curso.percentual_responderam, :precision => 0 %>;"></div>
 </div>

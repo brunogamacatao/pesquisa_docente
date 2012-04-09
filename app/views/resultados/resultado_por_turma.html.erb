@@ -1,6 +1,10 @@
 <h3><%= "#{@turma.professor.nome} - #{@turma.disciplina.nome} #{@turma.turno} #{@turma.horario}" %></h3>
 
-<p><%= @turma.total_alunos_responderam %> de <%= @turma.total_alunos %> responderam</p>
+<p>
+  <%= @turma.total_alunos_responderam %> de <%= @turma.total_alunos %> responderam
+  &nbsp;
+  <%= link_to 'Alunos que faltam responder', {:action => :alunos_que_faltam_por_turma}, :id => @turma.id, :class => "btn btn-warning" %>
+</p>
 <div class="progress progress-striped progress-success active">
   <div class="bar" style="width: <%= number_to_percentage @turma.percentual_responderam, :precision => 0 %>;"></div>
 </div>
