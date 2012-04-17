@@ -19,6 +19,12 @@
     </div>
   </li>
 <% end %>
+  <li>
+    <h4>Média Geral:</h4>
+    <div class="progress progress-alert">
+      <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_por_instituicao(@instituicao) * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_por_instituicao(@instituicao), :precision => 1, :separator => ',' %></p></div>
+    </div>
+  </li>
 </ol>
 
 <hr/>
