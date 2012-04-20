@@ -14,6 +14,14 @@ class ResultadosController < ApplicationController
     end
     
     @percentual = (@total_alunos > 0 && (@total_respostas / @total_alunos)) || 0
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ResultadoGeralPdf.new(@pesquisa, @perguntas, @total_respostas, @total_alunos, view_context)
+        send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
+      end
+    end
   end
   
   def resultado_por_instituicao

@@ -1,37 +1,23 @@
-<h3>Progresso da Pesquisa</h3>
-<p><%= @total_respostas %> de <%= @total_alunos %> responderam</p>
-<div class="progress progress-striped progress-success active">
-  <div class="bar" style="width: <%= number_to_percentage @percentual, :precision => 0 %>;"></div>
-</div>
-<hr/>
+<% present @pesquisa do |pesquisa_presenter| %>
+  <h3>Progresso da Pesquisa</h3>
+  <p><%= @total_respostas %> de <%= @total_alunos %> responderam</p>
+  <%= pesquisa_presenter.barra_de_percentual %>
+  <hr/>
 
-<h3><%= @pesquisa.nome %></h3>
-<ol>
-<% @perguntas.each do |pergunta| %>
-  <li>
-    <%= pergunta.pergunta %> &nbsp;
-    <div class="progress progress-alert">
-      <div class="bar" style="width: <%= number_to_percentage pergunta.media_geral * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_geral, :precision => 1, :separator => ',' %></p></div>
-    </div>
-  </li>
+  <h3>
+    <%= @pesquisa.nome %> -
+    <%= link_to 'Imprimir', {:action => :index, :format => :pdf}, :id => 2, :class => "btn btn-success" %>
+  </h3>
+  <ol>
+    <%= render :partial => "pergunta", :collection => @perguntas, :locals => {pesquisa_presenter: pesquisa_presenter} %>
+    <li><h4>Média Geral:</h4> <%= pesquisa_presenter.barra_media_geral %></li>
+  </ol>
+  
+  
+  <hr/>
+  
+  <h3>Instituições</h3>
+  <ul>
+    <%= render :partial => "instituicao", :collection => @instituicoes, :locals => {pesquisa_presenter: pesquisa_presenter} %>
+  </ul>
 <% end %>
-  <li>
-    <h4>Média Geral:</h4>
-    <div class="progress progress-alert">
-      <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_geral * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_geral, :precision => 1, :separator => ',' %></p></div>
-    </div>
-  </li>
-</ol>
-
-<hr/>
-<h3>Instituições</h3>
-<ul>
-  <% @instituicoes.each do |instituicao| %>
-  <li>
-    <%= link_to "#{instituicao.sigla} (#{instituicao.total_alunos_responderam} de #{instituicao.total_alunos})", :action => 'resultado_por_instituicao', :id => instituicao.id %>
-    <div class="progress progress-striped active">
-      <div class="bar" style="width: <%= number_to_percentage instituicao.percentual_responderam, :precision => 0 %>;"></div>
-    </div>
-  </li>
-  <% end %>  
-</ul>
