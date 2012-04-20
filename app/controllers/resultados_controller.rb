@@ -29,7 +29,13 @@ class ResultadosController < ApplicationController
     @perguntas   = @pesquisa.perguntas.order(:ordem)
     @instituicao = Instituicao.find(params[:id])
     
-    gon.cursos = @instituicao.cursos
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ResultadoInstituicaoPdf.new(@pesquisa, @perguntas, @instituicao, view_context)
+        send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
+      end
+    end
   end
   
   def resumo_curso

@@ -1,23 +1,14 @@
-<% present @pesquisa do |pesquisa_presenter| %>
+<% present @pesquisa do |presenter| %>
   <h3>Progresso da Pesquisa</h3>
   <p><%= @total_respostas %> de <%= @total_alunos %> responderam</p>
-  <%= pesquisa_presenter.barra_de_percentual %>
+  <%= presenter.barra_de_percentual %>
   <hr/>
 
-  <h3>
-    <%= @pesquisa.nome %> -
-    <%= link_to 'Imprimir', {:action => :index, :format => :pdf}, :id => 2, :class => "btn btn-success" %>
-  </h3>
-  <ol>
-    <%= render :partial => "pergunta", :collection => @perguntas, :locals => {pesquisa_presenter: pesquisa_presenter} %>
-    <li><h4>Média Geral:</h4> <%= pesquisa_presenter.barra_media_geral %></li>
-  </ol>
-  
+  <h3><%= @pesquisa.nome %> - <%= presenter.botao_imprimir %></h3>
+  <%= presenter.exibe_detalhe_perguntas(@perguntas) %>
   
   <hr/>
   
   <h3>Instituições</h3>
-  <ul>
-    <%= render :partial => "instituicao", :collection => @instituicoes, :locals => {pesquisa_presenter: pesquisa_presenter} %>
-  </ul>
+  <%= presenter.exibe_detalhe_instituicoes(@instituicoes) %>
 <% end %>
