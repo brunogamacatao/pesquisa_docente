@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*- 
-class ResultadoInstituicaoPdf < Prawn::Document
-  def initialize(pesquisa, perguntas, instituicao, view)
+class ResultadoCursoPdf < Prawn::Document
+  def initialize(pesquisa, perguntas, curso, view)
     super(top_margin: 70)
-    @pesquisa        = pesquisa
-    @perguntas       = perguntas
-    @instituicao     = instituicao
-    @view            = view
+    @pesquisa  = pesquisa
+    @perguntas = perguntas
+    @curso     = curso
+    @view      = view
     
     cabecalho
     tabela
@@ -15,7 +15,7 @@ class ResultadoInstituicaoPdf < Prawn::Document
   
   def cabecalho
     text "#{@pesquisa.nome}", :size => 20, :style => :bold, :align => :center
-    text "#{@instituicao.nome}", :size => 14, :style => :bold
+    text "Curso: #{@curso.nome}", :size => 14, :style => :bold
     move_down 30
   end
   
@@ -24,7 +24,7 @@ class ResultadoInstituicaoPdf < Prawn::Document
       [
         pergunta.ordem,
         pergunta.pergunta,
-        formata_numero(pergunta.media_por_instituicao(@instituicao))
+        formata_numero(pergunta.media_por_curso(@curso))
       ]
     end
     
@@ -43,10 +43,10 @@ class ResultadoInstituicaoPdf < Prawn::Document
   
   def resumo
     nota_total = 0
-    @perguntas.each  { |pergunta| nota_total += pergunta.media_por_instituicao(@instituicao) }
+    @perguntas.each  { |pergunta| nota_total += pergunta.media_por_curso(@curso) }
     media_geral = nota_total / @perguntas.count
     
-    text "Total de alunos que responderam: #{@instituicao.total_alunos_responderam} (de um total de #{@instituicao.total_alunos}) (#{@view.number_to_percentage 100 * @instituicao.total_alunos_responderam / @instituicao.total_alunos, :precision => 0})", :size => 12, :style => :bold, :align => :center
+    text "Total de alunos que responderam: #{@curso.total_alunos_responderam} (de um total de #{@curso.total_alunos}) (#{@view.number_to_percentage 100 * @curso.total_alunos_responderam / @curso.total_alunos, :precision => 0})", :size => 12, :style => :bold, :align => :center
     text "Média Geral -> #{formata_numero media_geral}", :size => 12, :style => :bold, :align => :center
     move_down 10
   end

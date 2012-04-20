@@ -1,41 +1,27 @@
-<h3><%= @curso.nome %></h3>
+<% present @curso do |presenter| %>
+  <h3><%= @curso.nome %></h3>
 
-<p>
-  <%= @curso.total_alunos_responderam %> de <%= @curso.total_alunos %> responderam
-  &nbsp;
-  <%= link_to 'Alunos que faltam responder', {:action => :alunos_que_faltam_por_curso}, :id => @curso.id, :class => "btn btn-warning" %>
-</p>
-<div class="progress progress-striped progress-success active">
-  <div class="bar" style="width: <%= number_to_percentage @curso.percentual_responderam, :precision => 0 %>;"></div>
-</div>
+  <p>
+    <%= @curso.total_alunos_responderam %> de <%= @curso.total_alunos %> responderam
+    &nbsp;
+    <%= presenter.link_alunos_que_nao_responderam %>
+  </p>
+  <%= presenter.barra_de_percentual %>
 
-<hr/>
+  <hr/>
 
-<h3><%= @pesquisa.nome %></h3>
-<ol>
-<% @perguntas.each do |pergunta| %>
-  <li>
-    <%= pergunta.pergunta %> &nbsp;
-    <div class="progress progress-alert">
-      <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_curso(@curso) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_curso(@curso), :precision => 1, :separator => ',' %></p></div>
-    </div>
-  </li>
+  <h3><%= @pesquisa.nome %> - <%= presenter.botao_imprimir %></h3>
+  <ol>
+    <%= render :partial => "pergunta", :collection => @perguntas, :locals => {presenter: presenter} %>
+    <li><h4>Média Geral:</h4> <%= presenter.barra_media_geral(@pesquisa) %></li>
+  </ol>
+
+  <hr/>
+
+  <h3>Turmas</h3>
+  <ul>
+    <% @curso.turmas.each do |turma| %>
+      <li><%= presenter.link_resultado_por_turma(turma) %></li>
+    <% end %>  
+  </ul>
 <% end %>
-  <li>
-    <h4>Média Geral:</h4>
-    <div class="progress progress-alert">
-      <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_por_curso(@curso) * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_por_curso(@curso), :precision => 1, :separator => ',' %></p></div>
-    </div>
-  </li>
-</ol>
-
-<hr/>
-
-<h3>Turmas</h3>
-<ul>
-  <% @curso.turmas.each do |turma| %>
-  <li>
-    <%= link_to "#{turma.professor.nome} - #{turma.disciplina.nome} #{turma.turno} #{turma.horario} (#{turma.total_alunos_responderam} de #{turma.total_alunos})", :action => 'resultado_por_turma', :id => turma.id %>
-  </li>
-  <% end %>  
-</ul>

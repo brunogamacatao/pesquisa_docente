@@ -38,21 +38,32 @@ class ResultadosController < ApplicationController
     end
   end
   
-  def resumo_curso
-    @curso = Curso.find(params[:id])
-    render :partial => "resultados/resumo_curso"
-  end
-  
   def resultado_por_curso
     @pesquisa  = Pesquisa.last
     @perguntas = @pesquisa.perguntas.order(:ordem)
     @curso     = Curso.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ResultadoCursoPdf.new(@pesquisa, @perguntas, @curso, view_context)
+        send_data pdf.render, filename: "resultado_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
+      end
+    end
   end
   
   def resultado_por_turma
     @pesquisa  = Pesquisa.last
     @perguntas = @pesquisa.perguntas.order(:ordem)
     @turma     = Turma.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ResultadoTurmaPdf.new(@pesquisa, @perguntas, @turma, view_context)
+        send_data pdf.render, filename: "resultado_#{@turma.disciplina.nome}.pdf", type: "application/pdf", disposition: "inline"
+      end
+    end
   end
   
   def alunos_que_faltam_por_instituicao

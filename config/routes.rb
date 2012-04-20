@@ -8,7 +8,6 @@ PesquisaDocente::Application.routes.draw do
   match 'iniciar_respostas'               => 'responder_pesquisa#iniciar_respostas'
   match 'enviar_respostas'                => 'responder_pesquisa#enviar_respostas'
   match 'resultado'                       => 'resultados#index'
-  match 'resultado/resumo_curso/:id'      => 'resultados#resumo_curso'
   match 'resultado/:id'                   => 'resultados#resultado_por_instituicao'
   match 'resultado_por_curso/:id'         => 'resultados#resultado_por_curso'
   match 'resultado_por_turma/:id'         => 'resultados#resultado_por_turma'

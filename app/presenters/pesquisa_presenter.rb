@@ -15,7 +15,9 @@ class PesquisaPresenter < BasePresenter
   end
   
   def link_resultado_instituicao(instituicao)
-    h.link_to "#{instituicao.sigla} (#{instituicao.total_alunos_responderam} de #{instituicao.total_alunos})", :action => 'resultado_por_instituicao', :id => instituicao.id
+    h.link_to "#{instituicao.sigla} (#{instituicao.total_alunos_responderam} de #{instituicao.total_alunos})", 
+      :action => 'resultado_por_instituicao', 
+      :id => instituicao.id
   end
   
   def barra_media_instituicao(instituicao)

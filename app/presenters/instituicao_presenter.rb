@@ -6,7 +6,7 @@ class InstituicaoPresenter < BasePresenter
   end
   
   def barra_percentual_pergunta(pergunta)
-    h.barra_de_progresso(pergunta.media_por_instituicao(instituicao) * 10, pergunta.media_por_instituicao(instituicao))
+    barra_progresso_nota(pergunta.media_por_instituicao(instituicao))
   end
   
   def link_alunos_que_nao_responderam
@@ -17,8 +17,7 @@ class InstituicaoPresenter < BasePresenter
   end
   
   def barra_media_geral(pesquisa)
-    media = pesquisa.media_por_instituicao(instituicao)
-    h.barra_de_progresso(media * 10, media)
+    barra_progresso_nota(pesquisa.media_por_instituicao(instituicao))
   end
   
   def link_resultado_por_curso(curso)

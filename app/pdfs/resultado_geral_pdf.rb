@@ -46,7 +46,7 @@ class ResultadoGeralPdf < Prawn::Document
     @perguntas.each  { |pergunta| nota_total += pergunta.media_geral }
     media_geral = nota_total / @perguntas.count
     
-    text "Total de alunos que responderam: #{@total_respostas} (de um total de #{@total_alunos}) (#{@view.number_to_percentage @total_respostas / @total_alunos, :precision => 0})", :size => 12, :style => :bold, :align => :center
+    text "Total de alunos que responderam: #{@total_respostas} (de um total de #{@total_alunos}) (#{@view.number_to_percentage 100 * @total_respostas / @total_alunos, :precision => 0})", :size => 12, :style => :bold, :align => :center
     text "Média Geral -> #{formata_numero media_geral}", :size => 12, :style => :bold, :align => :center
     move_down 10
   end

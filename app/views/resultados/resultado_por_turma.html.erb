@@ -11,7 +11,10 @@
 
 <hr/>
 
-<h3><%= @pesquisa.nome %></h3>
+<h3>
+  <%= @pesquisa.nome %> - 
+  <%= link_to 'Imprimir', {:action => :resultado_por_turma, :id => @turma.id, :format => :pdf}, :class => "btn btn-success" %>
+</h3>
 <ol>
 <% @perguntas.each do |pergunta| %>
   <li>
