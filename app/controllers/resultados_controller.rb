@@ -2,38 +2,46 @@ class ResultadosController < ApplicationController
   before_filter :authenticate_usuario!
   
   def index
-    @pesquisa        = Pesquisa.last
-    @perguntas       = @pesquisa.perguntas.order(:ordem)
-    @instituicoes    = Instituicao.order(:nome)
-    @total_alunos    = 0
-    @total_respostas = 0
+    if current_usuario.coordenador
+      redirect_to :action => :resultado_por_curso, :id => current_usuario.coordenador.curso.id
+    else
+      @pesquisa        = Pesquisa.last
+      @perguntas       = @pesquisa.perguntas.order(:ordem)
+      @instituicoes    = Instituicao.order(:nome)
+      @total_alunos    = 0
+      @total_respostas = 0
     
-    @instituicoes.each do |instituicao|
-      @total_alunos    += instituicao.total_alunos
-      @total_respostas += instituicao.total_alunos_responderam
-    end
+      @instituicoes.each do |instituicao|
+        @total_alunos    += instituicao.total_alunos
+        @total_respostas += instituicao.total_alunos_responderam
+      end
     
-    @percentual = (@total_alunos > 0 && (@total_respostas / @total_alunos)) || 0
+      @percentual = (@total_alunos > 0 && (@total_respostas / @total_alunos)) || 0
     
-    respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = ResultadoGeralPdf.new(@pesquisa, @perguntas, @total_respostas, @total_alunos, view_context)
-        send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
+      respond_to do |format|
+        format.html
+        format.pdf do
+          pdf = ResultadoGeralPdf.new(@pesquisa, @perguntas, @total_respostas, @total_alunos, view_context)
+          send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
+        end
       end
     end
   end
   
   def resultado_por_instituicao
-    @pesquisa    = Pesquisa.last
-    @perguntas   = @pesquisa.perguntas.order(:ordem)
-    @instituicao = Instituicao.find(params[:id])
+    if current_usuario.coordenador
+      redirect_to :action => :resultado_por_curso, :id => current_usuario.coordenador.curso.id
+    else
+      @pesquisa    = Pesquisa.last
+      @perguntas   = @pesquisa.perguntas.order(:ordem)
+      @instituicao = Instituicao.find(params[:id])
     
-    respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = ResultadoInstituicaoPdf.new(@pesquisa, @perguntas, @instituicao, view_context)
-        send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
+      respond_to do |format|
+        format.html
+        format.pdf do
+          pdf = ResultadoInstituicaoPdf.new(@pesquisa, @perguntas, @instituicao, view_context)
+          send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
+        end
       end
     end
   end
@@ -42,6 +50,8 @@ class ResultadosController < ApplicationController
     @pesquisa  = Pesquisa.last
     @perguntas = @pesquisa.perguntas.order(:ordem)
     @curso     = Curso.find(params[:id])
+    
+    authorize! :ver, @curso
     
     respond_to do |format|
       format.html

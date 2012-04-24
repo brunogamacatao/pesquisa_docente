@@ -47,3 +47,4 @@ gem "devise"
 gem 'gon'
 gem 'redis'
 gem 'prawn'
+gem 'cancan'

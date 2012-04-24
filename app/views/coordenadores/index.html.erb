@@ -1,0 +1,26 @@
+<h1>Coordenadors</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @coordenadores.each do |coordenador| %>
+      <tr>
+        <td><%= coordenador.id %></td>
+        <td><%= link_to coordenador.nome, coordenador_path(coordenador) %></td>
+        <td><%= coordenador.created_at %></td>
+        <td>
+          <%= link_to 'Edit', edit_coordenador_path(coordenador), :class => 'btn btn-mini' %>
+          <%= link_to 'Destroy', coordenador_path(coordenador), :method => :delete, :confirm => 'Are you sure?', :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New', new_coordenador_path, :class => 'btn btn-primary' %>

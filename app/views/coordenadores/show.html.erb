@@ -1,0 +1,22 @@
+<h1>/Coordenador</h1>
+
+<p>
+  <b>Nome</b><br>
+  <%= @coordenador.nome %>
+</p>
+
+<p>
+  <b>Curso</b><br>
+  <%= @coordenador.curso_id %>
+</p>
+
+<p>
+  <b>Usuario</b><br>
+  <%= @coordenador.usuario_id %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', coordenadores_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_coordenador_path(@coordenador), :class => 'btn' %>
+  <%= link_to 'Delete', coordenador_path(@coordenador), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

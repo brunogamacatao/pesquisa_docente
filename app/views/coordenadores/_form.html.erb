@@ -1,0 +1,45 @@
+<%= form_for @coordenador, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> /Coordenador</legend>
+
+    <div class="control-group">
+      <%= f.label :nome, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :nome, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :curso_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.collection_select(:curso_id, Curso.all(:order => "nome"), :id, :nome, :prompt => true) %>
+      </div>
+    </div>
+
+    <%= f.fields_for :usuario do |usuario_form| %>
+      <div class="control-group">
+        <%= usuario_form.label :email, :class => 'control-label' %>
+        <div class="controls">
+          <%= usuario_form.email_field :email, :class => 'text_field' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= usuario_form.label :password, :class => 'control-label' %>
+        <div class="controls">
+          <%= usuario_form.password_field :password, :class => 'text_field' %>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= usuario_form.label :password_confirmation, :class => 'control-label' %>
+        <div class="controls">
+          <%= usuario_form.password_field :password_confirmation, :class => 'text_field' %>
+        </div>
+      </div>
+    <% end %>
+      
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', coordenadores_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>
