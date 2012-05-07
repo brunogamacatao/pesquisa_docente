@@ -15,7 +15,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer'
+  gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
   gem 'twitter-bootstrap-rails'
@@ -48,3 +48,6 @@ gem 'gon'
 gem 'redis'
 gem 'prawn'
 gem 'cancan'
+gem 'carrierwave'
+gem "ckeditor", "3.7.0.rc3"
+gem 'mini_magick'

@@ -1,4 +1,6 @@
 PesquisaDocente::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
+
   devise_for :usuarios
 
   root :to => 'responder_pesquisa#responder_pesquisa'
@@ -18,4 +20,10 @@ PesquisaDocente::Application.routes.draw do
   resources :perguntas
   resources :pesquisas
   resources :coordenadores
+  
+  namespace :eleicao do
+    resources :chapas
+    match ''          => 'eleicao#index'
+    match 'confirmar' => 'eleicao#confirmar'
+  end
 end

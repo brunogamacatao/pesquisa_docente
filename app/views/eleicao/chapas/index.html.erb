@@ -1,0 +1,25 @@
+<h1>Listing eleicao_chapas</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Descricao</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @eleicao_chapas.each do |eleicao_chapa| %>
+  <tr>
+    <td><%= eleicao_chapa.nome %></td>
+    <td><%= eleicao_chapa.descricao %></td>
+    <td><%= link_to 'Show', eleicao_chapa %></td>
+    <td><%= link_to 'Edit', edit_eleicao_chapa_path(eleicao_chapa) %></td>
+    <td><%= link_to 'Destroy', eleicao_chapa, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Chapa', new_eleicao_chapa_path %>

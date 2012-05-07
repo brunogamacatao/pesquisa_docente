@@ -1,0 +1,34 @@
+<%= javascript_include_tag "ckeditor/init" %>
+
+<%= form_for @eleicao_chapa, :html => {:multipart => true} do |f| %>
+  <% if @eleicao_chapa.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@eleicao_chapa.errors.count, "error") %> prohibited this eleicao_chapa from being saved:</h2>
+
+      <ul>
+      <% @eleicao_chapa.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br />
+    <%= f.text_field :nome %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :imagem %><br />
+    <%= f.file_field :imagem %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :descricao %><br />
+    <%= f.cktext_area :descricao %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
