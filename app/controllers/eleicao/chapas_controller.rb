@@ -1,4 +1,6 @@
 class Eleicao::ChapasController < ApplicationController
+  before_filter :authenticate_usuario!
+  
   # GET /eleicao/chapas
   # GET /eleicao/chapas.json
   def index

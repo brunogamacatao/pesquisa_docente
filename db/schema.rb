@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120507004050) do
+ActiveRecord::Schema.define(:version => 20120507015926) do
 
   create_table "alunos", :force => true do |t|
     t.string   "nome"
@@ -73,6 +73,16 @@ ActiveRecord::Schema.define(:version => 20120507004050) do
     t.datetime "updated_at", :null => false
     t.string   "imagem"
   end
+
+  create_table "eleicao_votos", :force => true do |t|
+    t.integer  "aluno_id"
+    t.integer  "chapa_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "eleicao_votos", ["aluno_id"], :name => "index_eleicao_votos_on_aluno_id"
+  add_index "eleicao_votos", ["chapa_id"], :name => "index_eleicao_votos_on_chapa_id"
 
   create_table "instituicoes", :force => true do |t|
     t.string   "nome"

@@ -1,0 +1,18 @@
+<ul class="thumbnails">
+<% @chapas.each do |chapa| %>
+  <li class="span3">
+    <div class="thumbnail">
+      <%= image_tag chapa.imagem_url.to_s %>
+      <div class="caption">
+      <%= form_tag({:action => "confirmar"}) do %>
+        <%= hidden_field_tag 'aluno_id', @aluno.id %>
+        <%= hidden_field_tag 'chapa_id', chapa.id %>
+        <h5><%= chapa.nome %></h5>
+        <p><%= chapa.descricao.html_safe if chapa.descricao %></p>
+        <%= submit_tag 'Votar', :class => 'btn btn-success' %>
+      <% end %>
+      </div>
+    </div>
+  </li>
+<% end %>
+</ul>

@@ -23,7 +23,8 @@ PesquisaDocente::Application.routes.draw do
   
   namespace :eleicao do
     resources :chapas
-    match ''          => 'eleicao#index'
-    match 'confirmar' => 'eleicao#confirmar'
+    match ''               => 'eleicao#index'
+    match 'escolher_chapa' => 'eleicao#escolher_chapa'
+    match 'confirmar'      => 'eleicao#confirmar'
   end
 end

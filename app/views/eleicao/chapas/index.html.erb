@@ -1,25 +1,23 @@
-<h1>Listing eleicao_chapas</h1>
-
-<table>
+<h1>Chapas Cadastradas</h1>
+<br/>
+<table class="table-bordered table-striped">
   <tr>
     <th>Nome</th>
-    <th>Descricao</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Votos</th>
+    <th colspan="3">Ações</th>
   </tr>
 
 <% @eleicao_chapas.each do |eleicao_chapa| %>
   <tr>
-    <td><%= eleicao_chapa.nome %></td>
-    <td><%= eleicao_chapa.descricao %></td>
-    <td><%= link_to 'Show', eleicao_chapa %></td>
-    <td><%= link_to 'Edit', edit_eleicao_chapa_path(eleicao_chapa) %></td>
-    <td><%= link_to 'Destroy', eleicao_chapa, confirm: 'Are you sure?', method: :delete %></td>
+    <td><span class="label"><%= eleicao_chapa.nome %></span></td>
+    <td><span class="label label-inverse"><%= eleicao_chapa.votos.count %></span></td>
+    <td><%= link_to 'Exibir', eleicao_chapa, :class => 'btn btn-success' %></td>
+    <td><%= link_to 'Editar', edit_eleicao_chapa_path(eleicao_chapa), :class => 'btn btn-primary' %></td>
+    <td><%= link_to 'Excluir', eleicao_chapa, confirm: 'Tem certeza ?', method: :delete, :class => 'btn btn-danger' %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Chapa', new_eleicao_chapa_path %>
+<%= link_to 'Nova Chapa', new_eleicao_chapa_path, :class => 'btn btn-warning' %>
