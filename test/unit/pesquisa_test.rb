@@ -7,6 +7,7 @@
 #  slug       :string(255)
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  ativa      :boolean(1)
 #
 
 require 'test_helper'

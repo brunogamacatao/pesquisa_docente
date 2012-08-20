@@ -7,17 +7,21 @@
 #  slug       :string(255)
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
+#  ativa      :boolean(1)
 #
 
 class Pesquisa < ActiveRecord::Base
-  has_many :perguntas
+  scope :ativa, where(:ativa => true)
+  
+  has_many :dimensoes
   
   validates :nome, :slug, :presence => true
   validates :slug, :uniqueness => true
   
-  accepts_nested_attributes_for :perguntas
+  accepts_nested_attributes_for :dimensoes
+  attr_accessible :nome, :slug, :ativa, :dimensoes_attributes
   
-  attr_accessible :nome, :slug, :perguntas_attributes
+  after_save :atualiza_atributo_ativa
   
   def media_geral
     soma_respostas = 0
@@ -50,4 +54,9 @@ class Pesquisa < ActiveRecord::Base
     end
     soma_respostas / perguntas.count
   end
+  
+  private
+    def atualiza_atributo_ativa
+     Pesquisa.update_all({:ativa => false}, ["id <> ?", id]) if ativa
+    end
 end

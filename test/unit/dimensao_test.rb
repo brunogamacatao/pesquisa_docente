@@ -1,18 +1,17 @@
 # == Schema Information
 #
-# Table name: perguntas
+# Table name: dimensoes
 #
 #  id          :integer(4)      not null, primary key
-#  pergunta    :string(255)
-#  ordem       :integer(4)
+#  nome        :string(255)
+#  pesquisa_id :integer(4)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
-#  dimensao_id :integer(4)
 #
 
 require 'test_helper'
 
-class PerguntaTest < ActiveSupport::TestCase
+class DimensaoTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

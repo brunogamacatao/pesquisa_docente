@@ -4,4 +4,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'pergunta', 'perguntas'
   inflect.irregular 'resposta', 'respostas'
   inflect.irregular 'coordenador', 'coordenadores'
+  inflect.irregular 'dimensao', 'dimensoes'
 end

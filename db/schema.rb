@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820130206) do
+ActiveRecord::Schema.define(:version => 20120820180934) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -92,6 +92,15 @@ ActiveRecord::Schema.define(:version => 20120820130206) do
     t.datetime "updated_at",     :null => false
   end
 
+  create_table "dimensoes", :force => true do |t|
+    t.string   "nome"
+    t.integer  "pesquisa_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "dimensoes", ["pesquisa_id"], :name => "index_dimensoes_on_pesquisa_id"
+
   create_table "disciplinas", :force => true do |t|
     t.string   "nome"
     t.integer  "curso_id"
@@ -127,16 +136,19 @@ ActiveRecord::Schema.define(:version => 20120820130206) do
   create_table "perguntas", :force => true do |t|
     t.string   "pergunta"
     t.integer  "ordem"
-    t.integer  "pesquisa_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "dimensao_id"
   end
+
+  add_index "perguntas", ["dimensao_id"], :name => "index_perguntas_on_dimensao_id"
 
   create_table "pesquisas", :force => true do |t|
     t.string   "nome"
     t.string   "slug"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "ativa"
   end
 
   create_table "professores", :force => true do |t|

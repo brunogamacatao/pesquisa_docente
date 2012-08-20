@@ -5,14 +5,14 @@
 #  id          :integer(4)      not null, primary key
 #  pergunta    :string(255)
 #  ordem       :integer(4)
-#  pesquisa_id :integer(4)
 #  created_at  :datetime        not null
 #  updated_at  :datetime        not null
+#  dimensao_id :integer(4)
 #
 
 class Pergunta < ActiveRecord::Base
   has_many :respostas
-  belongs_to :pesquisa
+  belongs_to :dimensao
   
   validates :pergunta, :ordem, :presence => true
   validates :ordem, :numericality => true
