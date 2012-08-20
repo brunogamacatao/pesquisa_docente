@@ -7,7 +7,6 @@ gem 'rails', '3.2.1'
 
 gem 'mysql2'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -42,6 +41,8 @@ gem 'capistrano'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem 'rails-i18n'
+gem 'activeadmin'
 gem "nested_form"
 gem "devise"
 gem 'gon'
