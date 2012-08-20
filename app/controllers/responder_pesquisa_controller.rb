@@ -11,7 +11,7 @@ class ResponderPesquisaController < ApplicationController
           redirect_to :action => "responder_pesquisa"
         end
       else
-        @pesquisa = Pesquisa.first(:order => 'created_at DESC')
+        @pesquisa = Pesquisa.ativa(:order => 'created_at DESC').first
       end
     end
   end

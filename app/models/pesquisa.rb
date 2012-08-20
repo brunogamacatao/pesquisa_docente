@@ -1,3 +1,14 @@
+module TipoResposta
+  UMA_RESPOSTA_POR_TURMA = 0
+  UMA_RESPOSTA_POR_ALUNO = 1
+  
+  def tipo_resposta
+    return "" unless self[:tipo_resposta]
+    value = self[:tipo_resposta]
+    TipoResposta.constants[value].to_s.split('_').join(' ').downcase
+  end
+end
+
 # == Schema Information
 #
 # Table name: pesquisas
@@ -15,11 +26,13 @@ class Pesquisa < ActiveRecord::Base
   
   has_many :dimensoes
   
-  validates :nome, :slug, :presence => true
+  validates :nome, :slug, :tipo_resposta, :presence => true
   validates :slug, :uniqueness => true
   
+  include TipoResposta
+  
   accepts_nested_attributes_for :dimensoes
-  attr_accessible :nome, :slug, :ativa, :dimensoes_attributes
+  attr_accessible :nome, :slug, :ativa, :tipo_resposta, :dimensoes_attributes
   
   after_save :atualiza_atributo_ativa
   
