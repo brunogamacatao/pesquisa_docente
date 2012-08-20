@@ -38,22 +38,26 @@ class ResponderPesquisaController < ApplicationController
       return 
     end
     
-    turmas = @aluno.turmas.clone
-    @total = turmas.count
-    @atual = 0
-    
-    @aluno.respostas.each do |resposta|
-      @atual += 1 if turmas.delete(resposta.turma)
-    end
-    
-    @atual += 1
-    @progresso = @atual.to_f / @total.to_f * 100.0 if @total > 0
-    
-    unless turmas.empty?
-      @turma = turmas[0]
+    if @pesquisa.tipo_resposta == TipoResposta::UMA_RESPOSTA_POR_ALUNO
+      render "AGUARDE"
     else
-      flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
-      render :action => 'responder_pesquisa', :id => @pesquisa.id
+      turmas = @aluno.turmas.clone
+      @total = turmas.count
+      @atual = 0
+    
+      @aluno.respostas.each do |resposta|
+        @atual += 1 if turmas.delete(resposta.turma)
+      end
+    
+      @atual += 1
+      @progresso = @atual.to_f / @total.to_f * 100.0 if @total > 0
+    
+      unless turmas.empty?
+        @turma = turmas[0]
+      else
+        flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
+        render :action => 'responder_pesquisa', :id => @pesquisa.id
+      end
     end
   end
   
