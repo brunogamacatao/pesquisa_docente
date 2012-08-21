@@ -1,2 +1,7 @@
+#= require forms
+
 $(document).ready ->
-  alert('oi')
+  $('.nao_conheco_btn').click (event)->
+    event.preventDefault()
+    $(this).parent().remove()
+    return false

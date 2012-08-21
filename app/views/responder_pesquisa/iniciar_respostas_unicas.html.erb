@@ -1,3 +1,7 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag "iniciar_respostas_unicas" %>
+<% end %>
+
 <h3>Aluno:  <%= @aluno.nome %></h3>
 <hr/>
 <%= form_tag({:action => "enviar_respostas"},{:class => "well form-vertical"}) do %>
@@ -11,11 +15,15 @@
           <%= hidden_field_tag "respostas[#{idx}][pergunta_id]", pergunta.id %>
           <%= hidden_field_tag "respostas[#{idx}][aluno_id]", @aluno.id %>
           <%= label_tag "respostas[#{idx}][nota]", "#{pergunta.ordem}. #{pergunta.pergunta}", :class => "control-label" %>
-          <% 10.downto(0) do |opcao| %>
-            <%= opcao %> <%= radio_button_tag "respostas[#{idx}][nota]", opcao.to_s, false, :class => 'validate[required]' %>
-          <% end %>
-        <div/>
-        <hr/>
+          <strong>nota</strong>
+          <div class="well" style="display: inline-block">
+            <% 5.downto(1) do |opcao| %>
+              <%= opcao %> <%= radio_button_tag "respostas[#{idx}][nota]", opcao.to_s, false, :class => 'validate[required]' %>
+            <% end %>
+          </div>
+          <strong>ou</strong>
+          <button class="nao_conheco_btn btn btn-warning">Não Conheço</button>
+        </div>
       <% end %>
     </fieldset>
   <% end %>
