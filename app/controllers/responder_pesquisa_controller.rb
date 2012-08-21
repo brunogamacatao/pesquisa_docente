@@ -39,7 +39,7 @@ class ResponderPesquisaController < ApplicationController
     end
     
     if @pesquisa.tipo_resposta == TipoResposta::UMA_RESPOSTA_POR_ALUNO
-      render "AGUARDE"
+      render :iniciar_respostas_unicas
     else
       turmas = @aluno.turmas.clone
       @total = turmas.count

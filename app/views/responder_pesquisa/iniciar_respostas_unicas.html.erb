@@ -1,0 +1,30 @@
+<h3>Aluno:  <%= @aluno.nome %></h3>
+<hr/>
+<%= form_tag({:action => "enviar_respostas"},{:class => "well form-vertical"}) do %>
+  <%= hidden_field_tag "id", @pesquisa.id %>
+  <%= hidden_field_tag "matricula", @aluno.matricula %>
+  <% @pesquisa.dimensoes.each do |dimensao| %>
+    <fieldset>
+      <legend><%= dimensao.nome %></legend>
+      <% dimensao.perguntas.each_with_index do |pergunta, idx| %>
+        <div id="resposta_<%= idx %>">
+          <%= hidden_field_tag "respostas[#{idx}][pergunta_id]", pergunta.id %>
+          <%= hidden_field_tag "respostas[#{idx}][aluno_id]", @aluno.id %>
+          <%= label_tag "respostas[#{idx}][nota]", "#{pergunta.ordem}. #{pergunta.pergunta}", :class => "control-label" %>
+          <% 10.downto(0) do |opcao| %>
+            <%= opcao %> <%= radio_button_tag "respostas[#{idx}][nota]", opcao.to_s, false, :class => 'validate[required]' %>
+          <% end %>
+        <div/>
+        <hr/>
+      <% end %>
+    </fieldset>
+  <% end %>
+  <br/>
+  <%= submit_tag 'Enviar Respostas', :class => 'btn btn-primary' %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="well sidebar-nav">
+    &nbsp;
+  </div>
+<% end %>
