@@ -1,38 +1,61 @@
+<style type="text/css" media="screen">
+  button[disabled] {
+    display: none;
+  }
+  
+  .navigation {
+    float: right;
+  }
+</style>
+
+<style type="text/css">
+  label.error {
+    color: #ff0000;
+    margin-left: 10px;
+    position: relative;
+  }
+</style>
+
 <% content_for :scripts do %>
   <%= javascript_include_tag "iniciar_respostas_unicas" %>
 <% end %>
 
 <h3>Aluno:  <%= @aluno.nome %></h3>
-<hr/>
-<%= form_tag({:action => "enviar_respostas"},{:class => "well form-vertical"}) do %>
+<div id="wizard">
+<% resposta_id = 0 %>
+<%= form_tag({:action => "enviar_respostas"},{:class => "well form-vertical", :id => "wrapped"}) do %>
   <%= hidden_field_tag "id", @pesquisa.id %>
   <%= hidden_field_tag "matricula", @aluno.matricula %>
   <% @pesquisa.dimensoes.each do |dimensao| %>
-    <fieldset>
-      <legend><%= dimensao.nome %></legend>
-      <% dimensao.perguntas.each_with_index do |pergunta, idx| %>
-        <div id="resposta_<%= idx %>">
-          <%= hidden_field_tag "respostas[#{idx}][pergunta_id]", pergunta.id %>
-          <%= hidden_field_tag "respostas[#{idx}][aluno_id]", @aluno.id %>
-          <%= label_tag "respostas[#{idx}][nota]", "#{pergunta.ordem}. #{pergunta.pergunta}", :class => "control-label" %>
-          <strong>nota</strong>
-          <div class="well" style="display: inline-block">
-            <% 5.downto(1) do |opcao| %>
-              <%= opcao %> <%= radio_button_tag "respostas[#{idx}][nota]", opcao.to_s, false, :class => 'validate[required]' %>
-            <% end %>
+    <div class="step <%= 'submit' if dimensao == @pesquisa.dimensoes.last %>">
+      <fieldset>
+        <legend><%= dimensao.nome %></legend>
+        <br/>
+        <% dimensao.perguntas.each_with_index do |pergunta, idx| %>
+          <div id="resposta_<%= idx %>">
+            <%= hidden_field_tag "respostas[#{resposta_id}][pergunta_id]", pergunta.id %>
+            <%= hidden_field_tag "respostas[#{resposta_id}][aluno_id]", @aluno.id %>
+            <%= label_tag "respostas[#{resposta_id}][nota]", "#{pergunta.ordem}. #{pergunta.pergunta}", :class => "control-label" %>
+            <strong>nota</strong>
+            <div class="well" style="display: inline-block">
+              <% 5.downto(1) do |opcao| %>
+                <%= opcao %> <%= radio_button_tag "respostas[#{resposta_id}][nota]", opcao.to_s, false, :class => 'required' %>
+              <% end %>
+            </div>
+            <strong>ou</strong>
+            <button class="nao_conheco_btn btn btn-warning">Não Conheço</button>
           </div>
-          <strong>ou</strong>
-          <button class="nao_conheco_btn btn btn-warning">Não Conheço</button>
-        </div>
-      <% end %>
-    </fieldset>
+          <% resposta_id += 1 %>
+        <% end %>
+      </fieldset>
+    </div>
   <% end %>
   <br/>
-  <%= submit_tag 'Enviar Respostas', :class => 'btn btn-primary' %>
+  <div class="navigation">
+    <button type="button" name="backward" class="backward btn btn-large btn-danger">Anterior</button>
+    <button type="button" name="forward" class="forward btn btn-large btn-success">Continuar</button>
+    <%= button_tag 'Concluir', :class => 'submit btn btn-large btn-success' %>
+  </div>  
 <% end %>
+</div>
 
-<% content_for :sidebar do %>
-  <div class="well sidebar-nav">
-    &nbsp;
-  </div>
-<% end %>

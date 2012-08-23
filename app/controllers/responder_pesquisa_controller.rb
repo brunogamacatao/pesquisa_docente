@@ -39,7 +39,20 @@ class ResponderPesquisaController < ApplicationController
     end
     
     if @pesquisa.tipo_resposta == TipoResposta::UMA_RESPOSTA_POR_ALUNO
-      render :iniciar_respostas_unicas
+      ja_respondeu = false
+      @aluno.respostas.each do |resposta|
+        if resposta.pergunta.dimensao.pesquisa.id == @pesquisa.id
+          ja_respondeu = true
+          break
+        end
+      end
+      
+      unless ja_respondeu
+        render :iniciar_respostas_unicas
+      else
+        flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
+        render :action => 'responder_pesquisa', :id => @pesquisa.id
+      end
     else
       turmas = @aluno.turmas.clone
       @total = turmas.count
@@ -67,6 +80,8 @@ class ResponderPesquisaController < ApplicationController
       redirect_to :action => "responder_pesquisa"
       return 
     end
+
+    puts "params = #{params}"
       
     params[:respostas].each do |k, resposta|
       Resposta.create(resposta)
