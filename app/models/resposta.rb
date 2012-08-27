@@ -30,6 +30,13 @@ class Resposta < ActiveRecord::Base
       $redis.sadd(self.turma.redis_key(:alunos_responderam), self.aluno.id)
       $redis.sadd(self.turma.disciplina.curso.redis_key(:alunos_responderam), self.aluno.id)
       $redis.sadd(self.turma.disciplina.curso.instituicao.redis_key(:alunos_responderam), self.aluno.id)
+    else
+      cursos = self.aluno.turmas.group_by { |t| t.disciplina.curso }
+      cursos.each do |c|
+        curso = c[0]
+        $redis.sadd(curso.redis_key(:alunos_responderam), self.aluno.id)
+        $redis.sadd(curso.instituicao.redis_key(:alunos_responderam), self.aluno.id)
+      end
     end
   end
 end

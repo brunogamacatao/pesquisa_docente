@@ -5,8 +5,8 @@ class ResultadosController < ApplicationController
     if current_usuario.coordenador
       redirect_to :action => :resultado_por_curso, :id => current_usuario.coordenador.curso.id
     else
-      @pesquisa        = Pesquisa.last
-      @perguntas       = @pesquisa.perguntas.order(:ordem)
+      @pesquisa        = Pesquisa.ativa(:order => 'created_at DESC').first
+      @dimensoes       = @pesquisa.dimensoes
       @instituicoes    = Instituicao.order(:nome)
       @total_alunos    = 0
       @total_respostas = 0
@@ -21,7 +21,7 @@ class ResultadosController < ApplicationController
       respond_to do |format|
         format.html
         format.pdf do
-          pdf = ResultadoGeralPdf.new(@pesquisa, @perguntas, @total_respostas, @total_alunos, view_context)
+          pdf = ResultadoGeralPdf.new(@pesquisa, @dimensoes, @total_respostas, @total_alunos, view_context)
           send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
         end
       end
@@ -32,14 +32,14 @@ class ResultadosController < ApplicationController
     if current_usuario.coordenador
       redirect_to :action => :resultado_por_curso, :id => current_usuario.coordenador.curso.id
     else
-      @pesquisa    = Pesquisa.last
-      @perguntas   = @pesquisa.perguntas.order(:ordem)
+      @pesquisa    = Pesquisa.ativa(:order => 'created_at DESC').first
+      @dimensoes   = @pesquisa.dimensoes
       @instituicao = Instituicao.find(params[:id])
     
       respond_to do |format|
         format.html
         format.pdf do
-          pdf = ResultadoInstituicaoPdf.new(@pesquisa, @perguntas, @instituicao, view_context)
+          pdf = ResultadoInstituicaoPdf.new(@pesquisa, @dimensoes, @instituicao, view_context)
           send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
         end
       end
@@ -47,8 +47,8 @@ class ResultadosController < ApplicationController
   end
   
   def resultado_por_curso
-    @pesquisa  = Pesquisa.last
-    @perguntas = @pesquisa.perguntas.order(:ordem)
+    @pesquisa  = Pesquisa.ativa(:order => 'created_at DESC').first
+    @dimensoes = @pesquisa.dimensoes
     @curso     = Curso.find(params[:id])
     
     authorize! :ver, @curso
@@ -56,14 +56,14 @@ class ResultadosController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = ResultadoCursoPdf.new(@pesquisa, @perguntas, @curso, view_context)
+        pdf = ResultadoCursoPdf.new(@pesquisa, @dimensoes, @curso, view_context)
         send_data pdf.render, filename: "resultado_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
   end
   
   def resultado_por_turma
-    @pesquisa  = Pesquisa.last
+    @pesquisa  = Pesquisa.ativa(:order => 'created_at DESC').first
     @perguntas = @pesquisa.perguntas.order(:ordem)
     @turma     = Turma.find(params[:id])
     

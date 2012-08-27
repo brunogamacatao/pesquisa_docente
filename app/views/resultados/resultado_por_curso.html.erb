@@ -11,17 +11,15 @@
   <hr/>
 
   <h3><%= @pesquisa.nome %> - <%= presenter.botao_imprimir %></h3>
-  <ol>
-    <%= render :partial => "pergunta", :collection => @perguntas, :locals => {presenter: presenter} %>
-    <li><h4>Média Geral:</h4> <%= presenter.barra_media_geral(@pesquisa) %></li>
-  </ol>
 
   <hr/>
 
+  <% if @pesquisa.tipo_resposta == TipoResposta::UMA_RESPOSTA_POR_TURMA %>
   <h3>Turmas</h3>
   <ul>
     <% @curso.turmas.each do |turma| %>
       <li><%= presenter.link_resultado_por_turma(turma) %></li>
     <% end %>  
   </ul>
+  <% end %>
 <% end %>
