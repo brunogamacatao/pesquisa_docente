@@ -2,7 +2,7 @@
 set -e
 
 # Feel free to change any of the following variables for your app:
-TIMEOUT=${TIMEOUT-60}
+TIMEOUT=${TIMEOUT-600}
 APP_ROOT=/home/deployer/apps/pesquisa_docente/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
 CMD="cd $APP_ROOT; bundle exec unicorn -D -c $APP_ROOT/config/unicorn.rb -E production"
