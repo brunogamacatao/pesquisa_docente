@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+require "delayed/recipes"
 
 server "192.168.5.154", :web, :app, :db, primary: true
 
@@ -11,11 +12,15 @@ set :use_sudo, false
 set :scm, "git"
 set :repository, "git@github.com:brunogamacatao/#{application}.git"
 set :branch, "master"
+set :rails_env, "production" #added for delayed job  
 
 default_run_options[:pty] = true
 ssh_options[:forward_agent] = true
 
-after "deploy", "deploy:cleanup" # keep only the last 5 releases
+after "deploy",         "deploy:cleanup" # keep only the last 5 releases
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
 
 namespace :deploy do
   %w[start stop restart].each do |command|

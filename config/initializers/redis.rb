@@ -4,6 +4,8 @@ puts "Construindo a cache"
 
 turma = Turma.first
 #if $redis.scard(turma.redis_key(:alunos)) == 0
+
+if !Rails.env.test?
   $redis.multi do
     Turma.all.each do |turma|
       turma.alunos.each do |aluno|
@@ -19,6 +21,8 @@ turma = Turma.first
       end
     end
   end
+end
+
 # else
 #   puts "A cache ja estava criada"
 # end

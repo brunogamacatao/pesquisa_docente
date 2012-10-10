@@ -69,6 +69,43 @@ class Pesquisa < ActiveRecord::Base
     soma_respostas / perguntas.count
   end
   
+  def self.gerar_relatorio_csv(id)
+    find(id).gerar_relatorio_csv
+  end
+  
+  def gerar_relatorio_csv
+    arquivo = "/tmp/geral.csv"
+    arquivo = "/home/deployer/apps/pesquisa_docente/current/log/geral.csv" if Rails.env.production?
+    
+    CSV.open(arquivo, "wb") do |csv|
+      linha         = []
+      ids_perguntas = []
+    
+      dimensoes.each do |dimensao|
+        dimensao.perguntas.order("ordem").each do |pergunta|
+          linha << pergunta.ordem
+          ids_perguntas << pergunta.id
+        end
+      end
+      csv << linha
+    
+      Aluno.all.each do |aluno|
+        resposta = [] 
+        qtd = 0
+        ids_perguntas.each do |pergunta_id|
+          r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno.id, pergunta_id).first
+          if r
+            resposta << r.nota
+            qtd += 1
+          else
+            resposta << '-'
+          end
+        end
+        csv << resposta if qtd > 0
+      end # end each
+    end # end CSV
+  end
+  
   private
     def atualiza_atributo_ativa
      Pesquisa.update_all({:ativa => false}, ["id <> ?", id]) if ativa

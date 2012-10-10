@@ -20,6 +20,7 @@ PesquisaDocente::Application.routes.draw do
   match 'resultado/falta_instituicao/:id' => 'resultados#alunos_que_faltam_por_instituicao'
   match 'resultado/falta_curso/:id'       => 'resultados#alunos_que_faltam_por_curso'
   match 'resultado/falta_turma/:id'       => 'resultados#alunos_que_faltam_por_turma'
+  match "/delayed_job"                    => DelayedJobWeb, :anchor => false
   
   resources :perguntas
   resources :pesquisas

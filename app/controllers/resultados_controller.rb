@@ -25,35 +25,8 @@ class ResultadosController < ApplicationController
           send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
         end
         format.csv do
-          respostas = CSV.generate do |csv|
-            linha         = []
-            ids_perguntas = []
-          
-            @pesquisa.dimensoes.each do |dimensao|
-              dimensao.perguntas.order("ordem").each do |pergunta|
-                linha << pergunta.ordem
-                ids_perguntas << pergunta.id
-              end
-            end
-            csv << linha
-          
-            Aluno.all.each do |aluno|
-              resposta = [] 
-              qtd = 0
-              ids_perguntas.each do |pergunta_id|
-                r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno.id, pergunta_id).first
-                if r
-                  resposta << r.nota
-                  qtd += 1
-                else
-                  resposta << '-'
-                end
-              end
-              csv << resposta if qtd > 0
-            end # end each
-          end # end CSV
-          
-          send_data respostas
+          Pesquisa.delay.gerar_relatorio_csv(@pesquisa.id)
+          render :text => "Aguarde, o relatorio esta sendo gerado ..."
         end # end format
       end # end respond_to
     end # end if
@@ -74,35 +47,8 @@ class ResultadosController < ApplicationController
           send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
         end
         format.csv do
-          respostas = CSV.generate do |csv|
-            linha         = []
-            ids_perguntas = []
-          
-            @pesquisa.dimensoes.each do |dimensao|
-              dimensao.perguntas.order("ordem").each do |pergunta|
-                linha << pergunta.ordem
-                ids_perguntas << pergunta.id
-              end
-            end
-            csv << linha
-          
-            $redis.smembers(@instituicao.redis_key(:alunos_responderam)).each do |aluno_id|
-              resposta = [] 
-              qtd = 0
-              ids_perguntas.each do |pergunta_id|
-                r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno_id, pergunta_id).first
-                if r
-                  resposta << r.nota
-                  qtd += 1
-                else
-                  resposta << '-'
-                end
-              end
-              csv << resposta if qtd > 0
-            end # end each
-          end # end CSV
-          
-          send_data respostas
+          Instituicao.delay.gerar_relatorio_csv(@instituicao.id, @pesquisa.id)
+          render :text => "Aguarde, o relatorio esta sendo gerado ..."
         end # end format
       end
     end
@@ -122,37 +68,9 @@ class ResultadosController < ApplicationController
         send_data pdf.render, filename: "resultado_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
       end
       format.csv do
-        respostas = CSV.generate do |csv|
-          linha         = []
-          ids_perguntas = []
-        
-          @pesquisa.dimensoes.each do |dimensao|
-            dimensao.perguntas.order("ordem").each do |pergunta|
-              linha << pergunta.ordem
-              ids_perguntas << pergunta.id
-            end
-          end
-          csv << linha
-        
-          $redis.smembers(@curso.redis_key(:alunos_responderam)).each do |aluno_id|
-            resposta = [] 
-            qtd = 0
-            ids_perguntas.each do |pergunta_id|
-              r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno_id, pergunta_id).first
-              if r
-                resposta << r.nota
-                qtd += 1
-              else
-                resposta << '-'
-              end
-            end
-            csv << resposta if qtd > 0
-          end # end each
-        end # end CSV
-        
-        send_data respostas
+        Curso.delay.gerar_relatorio_csv(@curso.id, @pesquisa.id)
+        render :text => "Aguarde, o relatorio esta sendo gerado ..."
       end # end format
-
     end
   end
   
