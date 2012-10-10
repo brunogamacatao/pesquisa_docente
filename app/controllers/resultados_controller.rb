@@ -24,9 +24,40 @@ class ResultadosController < ApplicationController
           pdf = ResultadoGeralPdf.new(@pesquisa, @dimensoes, @total_respostas, @total_alunos, view_context)
           send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
         end
-      end
-    end
-  end
+        format.csv do
+          respostas = CSV.generate do |csv|
+            linha         = []
+            ids_perguntas = []
+          
+            @pesquisa.dimensoes.each do |dimensao|
+              dimensao.perguntas.order("ordem").each do |pergunta|
+                linha << pergunta.ordem
+                ids_perguntas << pergunta.id
+              end
+            end
+            csv << linha
+          
+            Aluno.all.each do |aluno|
+              resposta = [] 
+              qtd = 0
+              ids_perguntas.each do |pergunta_id|
+                r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno.id, pergunta_id).first
+                if r
+                  resposta << r.nota
+                  qtd += 1
+                else
+                  resposta << '-'
+                end
+              end
+              csv << resposta if qtd > 0
+            end # end each
+          end # end CSV
+          
+          send_data respostas
+        end # end format
+      end # end respond_to
+    end # end if
+  end # end def
   
   def resultado_por_instituicao
     if current_usuario.coordenador
@@ -42,6 +73,37 @@ class ResultadosController < ApplicationController
           pdf = ResultadoInstituicaoPdf.new(@pesquisa, @dimensoes, @instituicao, view_context)
           send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
         end
+        format.csv do
+          respostas = CSV.generate do |csv|
+            linha         = []
+            ids_perguntas = []
+          
+            @pesquisa.dimensoes.each do |dimensao|
+              dimensao.perguntas.order("ordem").each do |pergunta|
+                linha << pergunta.ordem
+                ids_perguntas << pergunta.id
+              end
+            end
+            csv << linha
+          
+            $redis.smembers(@instituicao.redis_key(:alunos_responderam)).each do |aluno_id|
+              resposta = [] 
+              qtd = 0
+              ids_perguntas.each do |pergunta_id|
+                r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno_id, pergunta_id).first
+                if r
+                  resposta << r.nota
+                  qtd += 1
+                else
+                  resposta << '-'
+                end
+              end
+              csv << resposta if qtd > 0
+            end # end each
+          end # end CSV
+          
+          send_data respostas
+        end # end format
       end
     end
   end
@@ -59,6 +121,38 @@ class ResultadosController < ApplicationController
         pdf = ResultadoCursoPdf.new(@pesquisa, @dimensoes, @curso, view_context)
         send_data pdf.render, filename: "resultado_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
       end
+      format.csv do
+        respostas = CSV.generate do |csv|
+          linha         = []
+          ids_perguntas = []
+        
+          @pesquisa.dimensoes.each do |dimensao|
+            dimensao.perguntas.order("ordem").each do |pergunta|
+              linha << pergunta.ordem
+              ids_perguntas << pergunta.id
+            end
+          end
+          csv << linha
+        
+          $redis.smembers(@curso.redis_key(:alunos_responderam)).each do |aluno_id|
+            resposta = [] 
+            qtd = 0
+            ids_perguntas.each do |pergunta_id|
+              r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno_id, pergunta_id).first
+              if r
+                resposta << r.nota
+                qtd += 1
+              else
+                resposta << '-'
+              end
+            end
+            csv << resposta if qtd > 0
+          end # end each
+        end # end CSV
+        
+        send_data respostas
+      end # end format
+
     end
   end
   

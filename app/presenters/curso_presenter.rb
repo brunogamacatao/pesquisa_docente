@@ -32,4 +32,10 @@ class CursoPresenter < BasePresenter
       {:action => :resultado_por_curso, :id => curso.id, :format => :pdf}, 
       :class => "btn btn-success"
   end
+  
+  def botao_excel
+    h.link_to 'Excel', 
+      {:action => :resultado_por_curso, :id => curso.id, :format => :csv}, 
+      :class => "btn btn-success"
+  end
 end

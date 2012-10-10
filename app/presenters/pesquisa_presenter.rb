@@ -27,6 +27,10 @@ class PesquisaPresenter < BasePresenter
   def botao_imprimir
     h.link_to 'Imprimir', {:action => :index, :format => :pdf}, :class => "btn btn-success"
   end
+
+  def botao_excel
+    h.link_to 'Excel', {:action => :index, :format => :csv}, :class => "btn btn-success"
+  end
   
   def exibe_detalhe_perguntas(perguntas)
     detalhe = h.render :partial => "pergunta", :collection => perguntas, :locals => {presenter: self}
