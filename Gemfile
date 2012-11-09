@@ -56,5 +56,5 @@ gem 'redis'
 gem 'prawn'
 gem 'cancan'
 gem 'carrierwave'
-gem "ckeditor", "3.7.0.rc3"
+gem "ckeditor"
 gem 'mini_magick'
