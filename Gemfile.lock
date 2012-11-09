@@ -77,6 +77,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    commonjs (0.2.6)
     daemons (1.1.9)
     delayed_job (3.0.3)
       activesupport (~> 3.0)
@@ -124,6 +125,11 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.7.4)
+    less (2.2.2)
+      commonjs (~> 0.2.6)
+    less-rails (2.2.6)
+      actionpack (>= 3.1)
+      less (~> 2.2.0)
     libv8 (3.3.10.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
@@ -248,6 +254,7 @@ DEPENDENCIES
   gon
   jquery-rails
   jquery-ui-rails
+  less-rails
   mini_magick
   mysql2
   nested_form
