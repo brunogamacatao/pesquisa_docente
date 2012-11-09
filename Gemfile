@@ -35,10 +35,10 @@ gem 'jquery-rails'
 
 # Use unicorn as the web server
 gem 'unicorn'
-# gem 'daemons'
-# gem 'delayed_job', :require => nil
-# gem 'delayed_job_active_record'
-# gem "delayed_job_web"
+gem 'daemons'
+gem 'delayed_job', :require => nil
+gem 'delayed_job_active_record'
+gem "delayed_job_web"
 
 # Deploy with Capistrano
 gem 'capistrano'
