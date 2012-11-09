@@ -240,6 +240,7 @@ DEPENDENCIES
   ckeditor (= 3.7.0.rc3)
   coffee-rails (~> 3.2.1)
   daemons
+  delayed_job
   delayed_job_active_record
   delayed_job_web
   devise

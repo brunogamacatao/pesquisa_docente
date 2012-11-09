@@ -58,16 +58,19 @@ class ResponderPesquisaController < ApplicationController
       @total = turmas.count
       @atual = 0
     
+      # O laço abaixo conta para quantas turmas o aluno tem respostas
       @aluno.respostas.each do |resposta|
         @atual += 1 if turmas.delete(resposta.turma)
       end
     
+      # A partir da quantidade é calculada a porcentagem respondida
       @atual += 1
       @progresso = @atual.to_f / @total.to_f * 100.0 if @total > 0
     
+      # Caso ainda existam turmas, será escolhida a primeira para o aluno responder
       unless turmas.empty?
         @turma = turmas[0]
-      else
+      else # Caso contrário, a pesquisa está concluída
         flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
         render :action => 'responder_pesquisa', :id => @pesquisa.id
       end
@@ -81,8 +84,6 @@ class ResponderPesquisaController < ApplicationController
       return 
     end
 
-    puts "params = #{params}"
-      
     params[:respostas].each do |k, resposta|
       Resposta.create(resposta)
     end
