@@ -16,6 +16,7 @@ ActiveAdmin.register Pesquisa do
       f.inputs "Dimensoes" do
         f.has_many :dimensoes, :header => "" do |dimensao|
           dimensao.input :nome
+          dimensao.input :tipo, :as => :select, :collection => [['Comum', 0], ['Coordenador', 1]]
           dimensao.input :_destroy, :as=>:boolean, :required => false, :label=>'Remove'
           dimensao.has_many :perguntas, :header => "Perguntas" do |pergunta|
             pergunta.input :ordem

@@ -71,8 +71,14 @@ class ResponderPesquisaController < ApplicationController
       unless turmas.empty?
         @turma = turmas[0]
       else # Caso contrário, a pesquisa está concluída
-        flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
-        render :action => 'responder_pesquisa', :id => @pesquisa.id
+        # Verifica se ja respondeu a dimensão coordenador
+        @dimensao_coordenador = @pesquisa.dimensoes.where(:tipo => TipoDimensao::COORDENADOR).first
+        if @aluno.respostas.joins(:pergunta).where('perguntas.dimensao_id = ?', @dimensao_coordenador.id).empty?
+          render :iniciar_respostas_coordenador
+        else
+          flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
+          render :action => 'responder_pesquisa', :id => @pesquisa.id
+        end
       end
     end
   end

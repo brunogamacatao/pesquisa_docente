@@ -1,0 +1,41 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag "iniciar_respostas" %>
+<% end %>
+
+<h3>Aluno: <%= @aluno.nome %></h3>
+<hr/>
+<h3>Avalie o seu Coordenador de Curso</h3>
+<hr/>
+
+<% resposta_id = 0 %>
+<%= form_tag({:action => "enviar_respostas"},{:class => "well form-vertical"}) do %>
+  <%= hidden_field_tag "id", @pesquisa.id %>
+  <%= hidden_field_tag "matricula", @aluno.matricula %>
+  <fieldset>
+    <legend><%= @dimensao_coordenador.nome %></legend>
+    <br/>
+    <% @dimensao_coordenador.perguntas.each_with_index do |pergunta, idx| %>
+      <%= hidden_field_tag "respostas[#{resposta_id}][pergunta_id]", pergunta.id %>
+      <%= hidden_field_tag "respostas[#{resposta_id}][aluno_id]", @aluno.id %>
+      
+      <%= label_tag "respostas[#{resposta_id}][nota]", "#{pergunta.ordem}. #{pergunta.pergunta}", :class => "control-label" %>
+      <% 10.downto(0) do |opcao| %>
+        <%= opcao %> <%= radio_button_tag "respostas[#{resposta_id}][nota]", opcao.to_s, false, :class => 'validate[required]' %>
+      <% end %>
+      <% resposta_id += 1 %>
+      <hr/>
+    <% end %>
+  </fieldset>
+  <br/>
+  <%= submit_tag 'Enviar Respostas', :class => 'btn btn-primary' %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <div class="well sidebar-nav">
+    <h3>Progresso da Pesquisa</h3>
+    <p>Última Etapa</p>
+    <div class="progress progress-striped progress-success active">
+      <div class="bar" style="width: 100%;"></div>
+    </div>
+  </div>
+<% end %>
