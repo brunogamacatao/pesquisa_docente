@@ -2,7 +2,7 @@ $redis = Redis.new(:host => 'localhost', :port => 6379)
 
 puts "Construindo a cache"
 
-turma = Turma.first
+# turma = Turma.first
 #if $redis.scard(turma.redis_key(:alunos)) == 0
 
 # if !Rails.env.test?

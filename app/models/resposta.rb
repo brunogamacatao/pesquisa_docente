@@ -25,6 +25,8 @@ class Resposta < ActiveRecord::Base
   after_create :invalidate_cache
   after_save :invalidate_cache
   
+  scope :da_pesquisa, lambda { |pesquisa| joins(:pergunta => [{:dimensao => :pesquisa}]).where("pesquisas.id = ?", pesquisa.id)}
+  
   private 
   def invalidate_cache
     if self.turma

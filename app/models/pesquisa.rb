@@ -23,7 +23,7 @@ end
 #
 
 class Pesquisa < ActiveRecord::Base
-  scope :ativa, where(:ativa => true)
+  scope :ativa, where(:ativa => true).order('created_at DESC')
   
   has_many :dimensoes
   
