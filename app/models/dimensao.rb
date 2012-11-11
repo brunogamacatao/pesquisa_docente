@@ -1,8 +1,3 @@
-module TipoDimensao
-  COMUM       = 0
-  COORDENADOR = 1
-end
-
 # == Schema Information
 #
 # Table name: dimensoes
@@ -16,6 +11,8 @@ end
 #
 
 class Dimensao < ActiveRecord::Base
+  include PesquisaDocente::TipoDimensao
+  
   belongs_to :pesquisa
   has_many :perguntas
 
@@ -24,5 +21,6 @@ class Dimensao < ActiveRecord::Base
   accepts_nested_attributes_for :perguntas
   attr_accessible :nome, :perguntas_attributes, :tipo
   
-  default_scope where(:tipo => TipoDimensao::COMUM)
+  default_scope where(:tipo => COMUM)
+  scope :coordenador, where(:tipo => COORDENADOR)
 end

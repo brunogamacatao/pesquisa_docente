@@ -11,7 +11,7 @@ ActiveAdmin.register Pesquisa do
     f.inputs "Dados da Pesquisa" do
       f.input :nome
       f.input :slug
-      f.input :tipo_resposta, :as => :select, :collection => Hash[TipoResposta.constants.map { |tipo| [tipo.to_s, TipoResposta.class_eval(tipo.to_s)]}]
+      f.input :tipo_resposta, :as => :select, :collection => Hash[PesquisaDocente::TipoResposta.constants.map { |tipo| [tipo.to_s, PesquisaDocente::TipoResposta.class_eval(tipo.to_s)]}]
       f.input :ativa
       f.inputs "Dimensoes" do
         f.has_many :dimensoes, :header => "" do |dimensao|

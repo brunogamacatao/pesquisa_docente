@@ -19,7 +19,7 @@ class ResponderPesquisaController < ApplicationController
   def iniciar_respostas
     return if !valida_respostas?(params)
     
-    if @pesquisa.tipo_resposta == TipoResposta::UMA_RESPOSTA_POR_ALUNO
+    if @pesquisa.tipo_resposta == PesquisaDocente::TipoResposta::UMA_RESPOSTA_POR_ALUNO
       unless @aluno.ja_respondeu_alguma?(@pesquisa)
         render :iniciar_respostas_unicas
       else
@@ -38,7 +38,7 @@ class ResponderPesquisaController < ApplicationController
         @turma = turmas_falta_responder[0]
       else # Caso contrário, a pesquisa está concluída
         # Verifica se ja respondeu a dimensão coordenador
-        @dimensao_coordenador = @pesquisa.dimensoes.where(:tipo => TipoDimensao::COORDENADOR).first
+        @dimensao_coordenador = @pesquisa.dimensoes.coordenador.first
         if @aluno.respostas.joins(:pergunta).where('perguntas.dimensao_id = ?', @dimensao_coordenador.id).empty?
           render :iniciar_respostas_coordenador
         else

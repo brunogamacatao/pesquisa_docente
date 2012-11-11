@@ -14,7 +14,7 @@
 
   <hr/>
 
-  <% if @pesquisa.tipo_resposta == TipoResposta::UMA_RESPOSTA_POR_TURMA %>
+  <% if @pesquisa.tipo_resposta == PesquisaDocente::TipoResposta::UMA_RESPOSTA_POR_TURMA %>
   <h3>Turmas</h3>
   <ul>
     <% @curso.turmas.each do |turma| %>

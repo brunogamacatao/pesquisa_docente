@@ -12,6 +12,8 @@
 require 'set'
 
 class Curso < ActiveRecord::Base
+  include PesquisaDocente::Redis
+  
   belongs_to :instituicao
   has_many :disciplinas
   
@@ -41,43 +43,4 @@ class Curso < ActiveRecord::Base
   def percentual_responderam
     (self.total_alunos != 0 && 100 * self.total_alunos_responderam / self.total_alunos) || 0
   end
-  def redis_key(str)
-    "#{self.class.to_s.downcase}:#{self.id}:#{str}"
-  end  
-
-  def self.gerar_relatorio_csv(curso_id, pesquisa_id)
-    curso    = get(curso_id)
-    pesquisa = Pesquisa.get(pesquisa_id)
-    
-    arquivo = "/tmp/#{nome}.csv"
-    arquivo = "/home/deployer/apps/pesquisa_docente/current/log/#{nome}.csv" if Rails.env.production?
-    
-    CSV.open(arquivo, "wb") do |csv|
-      linha         = []
-      ids_perguntas = []
-    
-      pesquisa.dimensoes.each do |dimensao|
-        dimensao.perguntas.order("ordem").each do |pergunta|
-          linha << pergunta.ordem
-          ids_perguntas << pergunta.id
-        end
-      end
-      csv << linha
-    
-      $redis.smembers(curso.redis_key(:alunos_responderam)).each do |aluno_id|
-        resposta = [] 
-        qtd = 0
-        ids_perguntas.each do |pergunta_id|
-          r = Resposta.where("aluno_id = ? AND pergunta_id = ?", aluno_id, pergunta_id).first
-          if r
-            resposta << r.nota
-            qtd += 1
-          else
-            resposta << '-'
-          end
-        end
-        csv << resposta if qtd > 0
-      end # end each
-    end # end CSV
-  end  
 end

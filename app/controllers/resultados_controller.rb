@@ -23,10 +23,6 @@ class ResultadosController < ApplicationController
         format.pdf do
           pdf = ResultadoGeralPdf.new(@pesquisa, @dimensoes, @total_respostas, @total_alunos, view_context)
           send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
-        end
-        format.csv do
-          Pesquisa.delay.gerar_relatorio_csv(@pesquisa.id)
-          render :text => "Aguarde, o relatorio esta sendo gerado ..."
         end # end format
       end # end respond_to
     end # end if
@@ -45,10 +41,6 @@ class ResultadosController < ApplicationController
         format.pdf do
           pdf = ResultadoInstituicaoPdf.new(@pesquisa, @dimensoes, @instituicao, view_context)
           send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
-        end
-        format.csv do
-          Instituicao.delay.gerar_relatorio_csv(@instituicao.id, @pesquisa.id)
-          render :text => "Aguarde, o relatorio esta sendo gerado ..."
         end # end format
       end
     end
@@ -66,23 +58,18 @@ class ResultadosController < ApplicationController
       format.pdf do
         pdf = ResultadoCursoPdf.new(@pesquisa, @dimensoes, @curso, view_context)
         send_data pdf.render, filename: "resultado_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
-      end
-      format.csv do
-        Curso.delay.gerar_relatorio_csv(@curso.id, @pesquisa.id)
-        render :text => "Aguarde, o relatorio esta sendo gerado ..."
       end # end format
     end
   end
   
   def resultado_por_turma
-    @pesquisa  = Pesquisa.ativa(:order => 'created_at DESC').first
-    @perguntas = @pesquisa.perguntas.order(:ordem)
-    @turma     = Turma.find(params[:id])
+    @pesquisa = Pesquisa.ativa(:order => 'created_at DESC').first
+    @turma    = Turma.find(params[:id])
     
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = ResultadoTurmaPdf.new(@pesquisa, @perguntas, @turma, view_context)
+        pdf = ResultadoTurmaPdf.new(@pesquisa, @turma, view_context)
         send_data pdf.render, filename: "resultado_#{@turma.disciplina.nome}.pdf", type: "application/pdf", disposition: "inline"
       end
     end

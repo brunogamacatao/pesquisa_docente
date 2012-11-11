@@ -15,19 +15,20 @@
   <%= @pesquisa.nome %> - 
   <%= link_to 'Imprimir', {:action => :resultado_por_turma, :id => @turma.id, :format => :pdf}, :class => "btn btn-success" %>
 </h3>
-<ol>
-<% @perguntas.each do |pergunta| %>
-  <li>
-    <%= pergunta.pergunta %> &nbsp;
-    <div class="progress progress-alert">
-      <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_turma(@turma) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_turma(@turma), :precision => 1, :separator => ',' %></p></div>
-    </div>
-  </li>
+<% @pesquisa.dimensoes.each do |dimensao| %>
+  <h4><%= dimensao.nome %></h4>
+  <ol>
+  <% dimensao.perguntas.each do |pergunta| %>
+    <li>
+      <%= pergunta.pergunta %> &nbsp;
+      <div class="progress progress-alert">
+        <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_turma(@turma) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_turma(@turma), :precision => 1, :separator => ',' %></p></div>
+      </div>
+    </li>
+  <% end %>
+  </ol>
 <% end %>
-  <li>
-    <h4>Média Geral:</h4>
-    <div class="progress progress-alert">
-      <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_por_turma(@turma) * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_por_turma(@turma), :precision => 1, :separator => ',' %></p></div>
-    </div>
-  </li>
-</ol>
+<h4>Média Geral:</h4>
+<div class="progress progress-alert">
+  <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_por_turma(@turma) * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_por_turma(@turma), :precision => 1, :separator => ',' %></p></div>
+</div>

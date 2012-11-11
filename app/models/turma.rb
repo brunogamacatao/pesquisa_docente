@@ -12,6 +12,8 @@
 #
 
 class Turma < ActiveRecord::Base
+  include PesquisaDocente::Redis
+  
   has_and_belongs_to_many :alunos
   belongs_to :professor
   belongs_to :disciplina
@@ -33,8 +35,4 @@ class Turma < ActiveRecord::Base
   def percentual_responderam
     (self.total_alunos != 0 && 100 * self.total_alunos_responderam / self.total_alunos) || 0
   end
-  
-  def redis_key(str)
-    "#{self.class.to_s.downcase}:#{self.id}:#{str}"
-  end  
 end
