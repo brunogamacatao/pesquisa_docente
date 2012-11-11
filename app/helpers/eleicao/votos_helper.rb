@@ -1,2 +1,0 @@
-module Eleicao::VotosHelper
-end
