@@ -4,22 +4,31 @@ class Eleicao::ChapasController < ApplicationController
   # GET /eleicao/chapas
   # GET /eleicao/chapas.json
   def index
+    @chapas = []
     @eleicao_chapas = Eleicao::Chapa.all
+    
+    @eleicao_chapas.each do |c|
+      @chapas << {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: c.imagem.url.split('/')[-1]}}
+    end
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @eleicao_chapas }
+      format.json { render json: @chapas }
     end
   end
 
   # GET /eleicao/chapas/1
   # GET /eleicao/chapas/1.json
   def show
+    @chapa = {}
     @eleicao_chapa = Eleicao::Chapa.find(params[:id])
+
+    c = @eleicao_chapa
+    @chapa = {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: c.imagem.url.split('/')[-1]}}
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @eleicao_chapa }
+      format.json { render json: @chapa }
     end
   end
 
