@@ -11,9 +11,6 @@
   <tr>
     <td><span class="label"><%= eleicao_chapa.nome %></span></td>
     <td><span class="label label-inverse"><%= eleicao_chapa.votos.count %></span></td>
-    <td><%= link_to 'Exibir', eleicao_chapa, :class => 'btn btn-success' %></td>
-    <td><%= link_to 'Editar', edit_eleicao_chapa_path(eleicao_chapa), :class => 'btn btn-primary' %></td>
-    <td><%= link_to 'Excluir', eleicao_chapa, confirm: 'Tem certeza ?', method: :delete, :class => 'btn btn-danger' %></td>
   </tr>
 <% end %>
 </table>
