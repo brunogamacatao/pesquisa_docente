@@ -29,14 +29,25 @@ class Eleicao::EleicaoController < ApplicationController
       aluno = Aluno.where("matricula like ?", "#{params[:matricula]}%").first
     end
     
-    chapa = Eleicao::Chapa.find(params[:chapa_id])
-    
-    if Eleicao::Voto.where("aluno_id = ? AND chapa_id = ?", aluno, chapa).exists?
+    if Eleicao::Voto.where("aluno_id = ?", aluno).exists?
       respond_to do |format|
         format.json { render json: {erro: true, mensagem: "Você já votou antes !"} }
       end
     else
-      Eleicao::Voto.create(aluno: aluno, chapa: chapa)
+      chapa_id = params[:chapa_id].to_i
+      
+      if chapa_id < 0
+        eleicao = Eleicao::Eleicao.first
+        if chapa_id == -1
+          eleicao.brancos += 1
+        else
+          eleicao.nulos += 1
+        end
+        eleicao.save()
+      else
+        chapa = Eleicao::Chapa.find(params[:chapa_id])
+        Eleicao::Voto.create(aluno: aluno, chapa: chapa)
+      end
     
       respond_to do |format|
         # format.html do
