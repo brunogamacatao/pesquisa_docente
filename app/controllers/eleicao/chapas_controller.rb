@@ -8,7 +8,7 @@ class Eleicao::ChapasController < ApplicationController
     @eleicao_chapas = Eleicao::Chapa.all
     
     @eleicao_chapas.each do |c|
-      @chapas << {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: c.imagem.url.split('/')[-1]}}
+      @chapas << {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
     end
 
     respond_to do |format|
@@ -24,7 +24,7 @@ class Eleicao::ChapasController < ApplicationController
     @eleicao_chapa = Eleicao::Chapa.find(params[:id])
 
     c = @eleicao_chapa
-    @chapa = {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: c.imagem.url.split('/')[-1]}}
+    @chapa = {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
 
     respond_to do |format|
       format.html # show.html.erb
