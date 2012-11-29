@@ -8,7 +8,7 @@ class Eleicao::ChapasController < ApplicationController
     @eleicao_chapas = Eleicao::Chapa.all
     
     @eleicao_chapas.each do |c|
-      @chapas << {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
+      @chapas << criar_chapa(c)
     end
 
     respond_to do |format|
@@ -22,9 +22,7 @@ class Eleicao::ChapasController < ApplicationController
   def show
     @chapa = {}
     @eleicao_chapa = Eleicao::Chapa.find(params[:id])
-
-    c = @eleicao_chapa
-    @chapa = {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
+    @chapa = criar_chapa(@eleicao_chapa)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -97,11 +95,16 @@ class Eleicao::ChapasController < ApplicationController
     @chapas_json = []
 
     @chapas.each do |c|
-      @chapas_json << {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
+      @chapas_json << criar_chapa(c)
     end
     
     respond_to do |format|
       format.json { render json: @chapas_json }
     end
+  end
+  
+  private
+  def criar_chapa(c)
+    {id: c.id, nome: c.nome, descricao: c.descricao, eleicao_id: c.eleicao_id,imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
   end
 end
