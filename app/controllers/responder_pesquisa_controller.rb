@@ -62,6 +62,12 @@ class ResponderPesquisaController < ApplicationController
     redirect_to :action => 'iniciar_respostas', :id => params[:id], :matricula => params[:matricula]
   end
   
+  def crossdomain
+    respond_to do |format|
+      format.xml
+    end
+  end
+  
   private 
   def valida_respostas?(params)
     unless params[:id]

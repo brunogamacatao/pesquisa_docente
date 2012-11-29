@@ -1,5 +1,5 @@
 class Eleicao::ChapasController < ApplicationController
-  before_filter :authenticate_usuario!
+  #before_filter :authenticate_usuario!
   
   # GET /eleicao/chapas
   # GET /eleicao/chapas.json
@@ -80,6 +80,14 @@ class Eleicao::ChapasController < ApplicationController
     respond_to do |format|
       format.html { redirect_to eleicao_chapas_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def eleicao
+    @chapas = Eleicao::Chapa.where("eleicao_id = ?", params[:id])
+    
+    respond_to do |format|
+      format.json { render json: @chapas }
     end
   end
 end

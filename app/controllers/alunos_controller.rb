@@ -1,6 +1,4 @@
 class AlunosController < ApplicationController
-  before_filter :authenticate_usuario!
-  
   # GET /alunos
   # GET /alunos.json
   def index
@@ -81,5 +79,39 @@ class AlunosController < ApplicationController
       format.html { redirect_to alunos_url }
       format.json { head :no_content }
     end
+  end
+  
+  def get_aluno
+    @aluno = Aluno.where("matricula like ?", "#{params[:id]}%").first
+    
+    respond_to do |format|
+      format.json { render json: [@aluno, get_curso(@aluno)] }
+    end
+  end
+  
+  def pode_votar
+    aluno   = Aluno.where("matricula like ?", "#{params[:id]}%").first
+    eleicao = Eleicao::Eleicao.find(params[:eleicao_id])
+    pode    = get_curso(aluno) == eleicao.curso && !Eleicao::Voto.where(aluno_id:aluno).exists?
+    
+    respond_to do |format|
+      format.json { render json: {pode: pode}}
+    end
+  end
+  
+  private 
+  def get_curso(aluno)
+    cursos = {}
+    
+    aluno.turmas.each do |turma|
+      cursos[turma.disciplina.curso] ||= 0
+      cursos[turma.disciplina.curso] += 1
+    end
+    
+    cursos = cursos.sort_by { |curso_id, qtd| qtd }
+    curso  = nil
+    curso  = cursos[0][0] if cursos && cursos[0] && cursos[0][0]
+    
+    return curso
   end
 end

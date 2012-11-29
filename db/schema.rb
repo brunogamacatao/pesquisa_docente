@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121109031117) do
+ActiveRecord::Schema.define(:version => 20121129033219) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -131,7 +131,21 @@ ActiveRecord::Schema.define(:version => 20121109031117) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "imagem"
+    t.integer  "eleicao_id"
   end
+
+  add_index "eleicao_chapas", ["eleicao_id"], :name => "index_eleicao_chapas_on_eleicao_id"
+
+  create_table "eleicao_eleicoes", :force => true do |t|
+    t.string   "nome"
+    t.integer  "curso_id"
+    t.integer  "brancos"
+    t.integer  "nulos"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "eleicao_eleicoes", ["curso_id"], :name => "index_eleicao_eleicoes_on_curso_id"
 
   create_table "eleicao_votos", :force => true do |t|
     t.integer  "aluno_id"

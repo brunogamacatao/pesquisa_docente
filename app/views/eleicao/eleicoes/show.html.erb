@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nome:</b>
+  <%= @eleicao_eleicao.nome %>
+</p>
+
+<p>
+  <b>Curso:</b>
+  <%= @eleicao_eleicao.curso %>
+</p>
+
+<p>
+  <b>Brancos:</b>
+  <%= @eleicao_eleicao.brancos %>
+</p>
+
+<p>
+  <b>Nulos:</b>
+  <%= @eleicao_eleicao.nulos %>
+</p>
+
+
+<%= link_to 'Edit', edit_eleicao_eleicao_path(@eleicao_eleicao) %> |
+<%= link_to 'Back', eleicao_eleicoes_path %>

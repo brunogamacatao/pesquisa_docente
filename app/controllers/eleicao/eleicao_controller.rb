@@ -22,12 +22,37 @@ class Eleicao::EleicaoController < ApplicationController
   end
 
   def confirmar
-    aluno = Aluno.find(params[:aluno_id])
+    aluno = nil
+    if params[:aluno_id]
+      aluno = Aluno.find(params[:aluno_id])
+    elsif params[:matricula]
+      aluno = Aluno.where("matricula like ?", "#{params[:matricula]}%").first
+    end
+    
     chapa = Eleicao::Chapa.find(params[:chapa_id])
     
-    Eleicao::Voto.create(aluno: aluno, chapa: chapa)
+    if Eleicao::Voto.where("aluno_id = ? AND chapa_id = ?", aluno, chapa).exists?
+      respond_to do |format|
+        format.json { render json: {erro: true, mensagem: "Você já votou antes !"} }
+      end
+    else
+      Eleicao::Voto.create(aluno: aluno, chapa: chapa)
     
-    flash[:sucesso] = "Seu voto foi confirmado com sucesso. Obrigado !"
-    redirect_to :action => "index"
+      respond_to do |format|
+        # format.html do
+        #   flash[:sucesso] = "Seu voto foi confirmado com sucesso. Obrigado !"
+        #   redirect_to :action => "index"
+        # end
+        format.json { render json: {erro: false, mensagem: "Seu voto foi confirmado com sucesso."} }
+      end
+    end
+  end
+  
+  def list
+    @eleicoes = Eleicao::Eleicao.find(:all)
+    
+    respond_to do |format|
+      format.json { render json: @eleicoes}
+    end
   end
 end

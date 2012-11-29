@@ -1,0 +1,2 @@
+module Eleicao::EleicoesHelper
+end

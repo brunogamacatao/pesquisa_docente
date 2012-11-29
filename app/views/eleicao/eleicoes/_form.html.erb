@@ -1,0 +1,33 @@
+<%= form_for(@eleicao_eleicao) do |f| %>
+  <% if @eleicao_eleicao.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@eleicao_eleicao.errors.count, "error") %> prohibited this eleicao_eleicao from being saved:</h2>
+
+      <ul>
+      <% @eleicao_eleicao.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nome %><br />
+    <%= f.text_field :nome %>
+  </div>
+  <div class="field">
+    <%= f.label :curso %><br />
+    <%= f.text_field :curso %>
+  </div>
+  <div class="field">
+    <%= f.label :brancos %><br />
+    <%= f.number_field :brancos %>
+  </div>
+  <div class="field">
+    <%= f.label :nulos %><br />
+    <%= f.number_field :nulos %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Listing eleicao_eleicoes</h1>
+
+<table>
+  <tr>
+    <th>Nome</th>
+    <th>Curso</th>
+    <th>Brancos</th>
+    <th>Nulos</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @eleicao_eleicoes.each do |eleicao_eleicao| %>
+  <tr>
+    <td><%= eleicao_eleicao.nome %></td>
+    <td><%= eleicao_eleicao.curso %></td>
+    <td><%= eleicao_eleicao.brancos %></td>
+    <td><%= eleicao_eleicao.nulos %></td>
+    <td><%= link_to 'Show', eleicao_eleicao %></td>
+    <td><%= link_to 'Edit', edit_eleicao_eleicao_path(eleicao_eleicao) %></td>
+    <td><%= link_to 'Destroy', eleicao_eleicao, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Eleicao', new_eleicao_eleicao_path %>

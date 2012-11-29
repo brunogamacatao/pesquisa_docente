@@ -1,5 +1,4 @@
 class CursosController < ApplicationController
-  before_filter :authenticate_usuario!
   
   # GET /cursos
   # GET /cursos.json
