@@ -94,9 +94,14 @@ class Eleicao::ChapasController < ApplicationController
   
   def eleicao
     @chapas = Eleicao::Chapa.where("eleicao_id = ?", params[:id])
+    @chapas_json = []
+
+    @chapas.each do |c|
+      @chapas_json << {id: c.id, nome: c.nome, descricao: c.descricao, imagem: {url: "/assets/#{c.imagem.url.split('/')[-1]}"}}
+    end
     
     respond_to do |format|
-      format.json { render json: @chapas }
+      format.json { render json: @chapas_json }
     end
   end
 end
