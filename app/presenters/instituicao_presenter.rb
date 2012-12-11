@@ -34,7 +34,7 @@ class InstituicaoPresenter < BasePresenter
   
   def botao_excel
     h.link_to 'Excel', 
-      {:action => :resultado_por_instituicao, :id => instituicao.id, :format => :csv}, 
+      {:action => :resultado_por_instituicao, :id => instituicao.id, :format => :xls}, 
       :class => "btn btn-success"
   end
 end

@@ -29,7 +29,7 @@ class PesquisaPresenter < BasePresenter
   end
 
   def botao_excel
-    h.link_to 'Excel', {:action => :index, :format => :csv}, :class => "btn btn-success"
+    h.link_to 'Excel', {:action => :index, :format => :xls}, :class => "btn btn-success"
   end
   
   def exibe_detalhe_perguntas(perguntas)

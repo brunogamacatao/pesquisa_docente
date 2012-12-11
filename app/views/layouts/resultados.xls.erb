@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+   <Version>14.0</Version>
+  </DocumentProperties>
+  <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+   <AllowPNG/>
+  </OfficeDocumentSettings>
+  <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+   <WindowHeight>6240</WindowHeight>
+   <WindowWidth>10000</WindowWidth>
+   <WindowTopX>120</WindowTopX>
+   <WindowTopY>140</WindowTopY>
+   <ProtectStructure>False</ProtectStructure>
+   <ProtectWindows>False</ProtectWindows>
+  </ExcelWorkbook>    
+  <Styles>
+   <Style ss:ID="Default" ss:Name="Normal">
+    <Alignment ss:Vertical="Bottom"/>
+    <Borders/>
+    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+    <Interior/>
+    <NumberFormat/>
+    <Protection/>
+   </Style>
+   <Style ss:ID="s20" ss:Name="Percent">
+    <NumberFormat ss:Format="0%"/>
+   </Style>
+   <Style ss:ID="s64" ss:Parent="s20">
+    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000"/>
+   </Style>
+   <Style ss:ID="s65" ss:Parent="s20">
+    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000" ss:Bold="1"/>
+   </Style>
+   <Style ss:ID="s66">
+    <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000" ss:Bold="1"/>
+   </Style>
+   <Style ss:ID="s68">
+    <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="12" ss:Color="#000000" ss:Bold="1"/>
+   </Style>
+  </Styles>
+  <Worksheet ss:Name="Resultado">
+    <Table ss:ExpandedColumnCount="2" ss:ExpandedRowCount="7" x:FullColumns="1" x:FullRows="1" ss:DefaultColumnWidth="65" ss:DefaultRowHeight="15">
+      <Column ss:Width="503"/>
+      <Row>
+        <Cell ss:StyleID="s66"><Data ss:Type="String"><B><%= yield :titulo %></B></Data></Cell>
+      </Row>
+      <Row>
+        <Cell ss:StyleID="s68"><Data ss:Type="String"><B>Pergunta</B></Data></Cell>
+        <Cell ss:StyleID="s68"><Data ss:Type="String"><B>Média</B></Data></Cell>
+      </Row>
+      <%= yield %>
+    </Table>
+  </Worksheet>
+</Workbook>

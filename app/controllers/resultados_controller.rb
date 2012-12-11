@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ResultadosController < ApplicationController
   before_filter :authenticate_usuario!
   
@@ -20,6 +21,7 @@ class ResultadosController < ApplicationController
     
       respond_to do |format|
         format.html
+        format.xls
         format.pdf do
           pdf = ResultadoGeralPdf.new(@pesquisa, @dimensoes, @total_respostas, @total_alunos, view_context)
           send_data pdf.render, filename: "resultado_geral.pdf", type: "application/pdf", disposition: "inline"
@@ -38,6 +40,7 @@ class ResultadosController < ApplicationController
     
       respond_to do |format|
         format.html
+        format.xls
         format.pdf do
           pdf = ResultadoInstituicaoPdf.new(@pesquisa, @dimensoes, @instituicao, view_context)
           send_data pdf.render, filename: "resultado_#{@instituicao.sigla}.pdf", type: "application/pdf", disposition: "inline"
@@ -55,10 +58,24 @@ class ResultadosController < ApplicationController
     
     respond_to do |format|
       format.html
+      format.xls
       format.pdf do
         pdf = ResultadoCursoPdf.new(@pesquisa, @dimensoes, @curso, view_context)
         send_data pdf.render, filename: "resultado_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
       end # end format
+    end
+  end
+  
+  def resultado_coordenador_curso
+    @pesquisa  = Pesquisa.ativa(:order => 'created_at DESC').first
+    @dimensoes = @pesquisa.dimensoes.coordenador
+    @curso     = Curso.find(params[:id])
+    
+    authorize! :ver, @curso
+    
+    respond_to do |format|
+      format.html
+      format.xls
     end
   end
   
@@ -68,8 +85,9 @@ class ResultadosController < ApplicationController
     
     respond_to do |format|
       format.html
+      format.xls
       format.pdf do
-        pdf = ResultadoTurmaPdf.new(@pesquisa, @turma, view_context)
+        pdf = ResultadoTurmaPdf.new(@pesquisa, @pesquisa.dimensoes, @turma, view_context)
         send_data pdf.render, filename: "resultado_#{@turma.disciplina.nome}.pdf", type: "application/pdf", disposition: "inline"
       end
     end

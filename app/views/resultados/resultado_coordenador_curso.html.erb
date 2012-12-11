@@ -1,0 +1,35 @@
+<% present @curso do |presenter| %>
+  <h3><%= @curso.nome %></h3>
+
+  <p>
+    <%= @curso.total_alunos_responderam %> de <%= @curso.total_alunos %> responderam
+    &nbsp;
+    <%= presenter.link_alunos_que_nao_responderam %>
+  </p>
+  <%= presenter.barra_de_percentual %>
+
+  <hr/>
+
+  <h3>Resultado do Coordenador - <%= presenter.botao_imprimir %><%= presenter.botao_excel %></h3>
+
+  <hr/>
+
+  <% @dimensoes.each do |dimensao| %>
+    <h4><%= dimensao.nome %></h4>
+    <ol>
+    <% dimensao.perguntas.each do |pergunta| %>
+      <li>
+        <%= pergunta.pergunta %> &nbsp;
+        <div class="progress progress-alert">
+          <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_curso(@curso) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_curso(@curso), :precision => 1, :separator => ',' %></p></div>
+        </div>
+      </li>
+    <% end %>
+    </ol>
+  <% end %>
+  <h4>Média Geral:</h4>
+  <div class="progress progress-alert">
+    <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_por_coordenador(@curso) * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_por_coordenador(@curso), :precision => 1, :separator => ',' %></p></div>
+  </div>
+
+<% end %>

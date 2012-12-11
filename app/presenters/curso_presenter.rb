@@ -8,6 +8,13 @@ class CursoPresenter < BasePresenter
       :id => curso.id, 
       :class => "btn btn-warning"
   end
+
+  def link_resultado_coordenador
+    h.link_to 'Resultado do Coordenador', 
+      {:action => :resultado_coordenador_curso}, 
+      :id => curso.id, 
+      :class => "btn btn-warning"
+  end
   
   def barra_de_percentual
     h.barra_de_progresso(curso.percentual_responderam)
@@ -35,7 +42,7 @@ class CursoPresenter < BasePresenter
   
   def botao_excel
     h.link_to 'Excel', 
-      {:action => :resultado_por_curso, :id => curso.id, :format => :csv}, 
+      {:action => :resultado_por_curso, :id => curso.id, :format => :xls}, 
       :class => "btn btn-success"
   end
 end

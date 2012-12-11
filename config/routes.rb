@@ -19,6 +19,7 @@ PesquisaDocente::Application.routes.draw do
   match 'resultado'                       => 'resultados#index'
   match 'resultado/:id'                   => 'resultados#resultado_por_instituicao'
   match 'resultado_por_curso/:id'         => 'resultados#resultado_por_curso'
+  match 'resultado_coordenador_curso/:id' => 'resultados#resultado_coordenador_curso'
   match 'resultado_por_turma/:id'         => 'resultados#resultado_por_turma'
   match 'resultado/falta_instituicao/:id' => 'resultados#alunos_que_faltam_por_instituicao'
   match 'resultado/falta_curso/:id'       => 'resultados#alunos_que_faltam_por_curso'

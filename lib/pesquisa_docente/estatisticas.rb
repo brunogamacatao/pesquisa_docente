@@ -55,5 +55,19 @@ module PesquisaDocente
       
       soma_respostas / qtd_perguntas
     end
-  end
-end
+    
+    def media_por_coordenador(curso)
+      soma_respostas = 0
+      qtd_perguntas  = 0
+      
+      dimensoes.coordenador.each do |dimensao|
+        dimensao.perguntas.each do |pergunta|
+          soma_respostas += pergunta.media_por_curso(curso)
+          qtd_perguntas  += 1
+        end
+      end
+      
+      soma_respostas / qtd_perguntas
+    end
+  end # module Estatisticas
+end # module PesquisaDocente

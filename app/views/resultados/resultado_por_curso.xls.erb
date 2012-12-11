@@ -1,0 +1,9 @@
+<% content_for :titulo do %>Resultado do curso: <%= @curso.nome %><% end %>
+<% @pesquisa.dimensoes.each do |dimensao| %>
+  <% dimensao.perguntas.each do |pergunta| %>
+    <Row>
+      <Cell><Data ss:Type="String"><%= pergunta.pergunta %></Data></Cell>
+      <Cell ss:StyleID="s64"><Data ss:Type="Number"><%= pergunta.media_por_curso(@curso) / 100 %></Data></Cell>
+    </Row>
+  <% end %>
+<% end %>

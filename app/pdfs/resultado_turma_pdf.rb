@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*- 
 class ResultadoTurmaPdf < Prawn::Document
-  def initialize(pesquisa, perguntas, turma, view)
+  def initialize(pesquisa, dimensoes, turma, view)
     super(top_margin: 70)
     @pesquisa  = pesquisa
-    @perguntas = perguntas
+    @dimensoes = dimensoes
     @turma     = turma
     @view      = view
     
@@ -21,12 +21,18 @@ class ResultadoTurmaPdf < Prawn::Document
   end
   
   def tabela
-    items = @perguntas.map do |pergunta|
-      [
-        pergunta.ordem,
-        pergunta.pergunta,
-        formata_numero(pergunta.media_por_turma(@turma))
-      ]
+    items = []
+    
+    @dimensoes.each do |dimensao|
+      its = dimensao.perguntas.map do |pergunta|
+        [
+          pergunta.ordem,
+          pergunta.pergunta,
+          formata_numero(pergunta.media_por_turma(@turma))
+        ]
+      end
+      
+      items += its
     end
     
     doc_width = bounds.width
@@ -44,8 +50,14 @@ class ResultadoTurmaPdf < Prawn::Document
   
   def resumo
     nota_total = 0
-    @perguntas.each  { |pergunta| nota_total += pergunta.media_por_turma(@turma) }
-    media_geral = nota_total / @perguntas.count
+    qtd = 0
+    @dimensoes.each do |dimensao|
+      dimensao.perguntas.each do |pergunta| 
+        nota_total += pergunta.media_por_turma(@turma)
+        qtd += 1
+      end
+    end
+    media_geral = nota_total / qtd
     
     text "Total de alunos que responderam: #{@turma.total_alunos_responderam} (de um total de #{@turma.total_alunos}) (#{@view.number_to_percentage 100 * @turma.total_alunos_responderam / @turma.total_alunos, :precision => 0})", :size => 12, :style => :bold, :align => :center
     text "Média Geral -> #{formata_numero media_geral}", :size => 12, :style => :bold, :align => :center

@@ -14,6 +14,7 @@
 <h3>
   <%= @pesquisa.nome %> - 
   <%= link_to 'Imprimir', {:action => :resultado_por_turma, :id => @turma.id, :format => :pdf}, :class => "btn btn-success" %>
+  <%= link_to 'Excel', {:action => :resultado_por_turma, :id => @turma.id, :format => :xls}, :class => "btn btn-success" %>
 </h3>
 <% @pesquisa.dimensoes.each do |dimensao| %>
   <h4><%= dimensao.nome %></h4>
