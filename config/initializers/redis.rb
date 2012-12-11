@@ -3,8 +3,8 @@ $redis = Redis.new(:host => 'localhost', :port => 6379)
 puts "Construindo a cache"
 
 turma = Turma.first
-#if $redis.scard(turma.redis_key(:alunos)) == 0
-
+# if $redis.scard(turma.redis_key(:alunos)) == 0
+# 
 # if !Rails.env.test?
 #   pesquisa = Pesquisa.ativa.first
 #   
@@ -24,7 +24,7 @@ turma = Turma.first
 #     end
 #   end
 # end
-
+# 
 # else
 #   puts "A cache ja estava criada"
 # end
