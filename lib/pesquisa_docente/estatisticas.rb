@@ -60,9 +60,9 @@ module PesquisaDocente
       soma_respostas = 0
       qtd_perguntas  = 0
       
-      dimensoes.coordenador.each do |dimensao|
+      Dimensao.coordenador.where(:pesquisa_id => id).each do |dimensao|
         dimensao.perguntas.each do |pergunta|
-          soma_respostas += pergunta.media_por_curso(curso)
+          soma_respostas += pergunta.media_por_coordenador(curso)
           qtd_perguntas  += 1
         end
       end

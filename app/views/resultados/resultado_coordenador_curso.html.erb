@@ -10,7 +10,7 @@
 
   <hr/>
 
-  <h3>Resultado do Coordenador - <%= presenter.botao_imprimir %><%= presenter.botao_excel %></h3>
+  <h3>Resultado do Coordenador - <%= presenter.botao_imprimir_coordenador %><%= presenter.botao_excel_coordenador %></h3>
 
   <hr/>
 
@@ -21,7 +21,7 @@
       <li>
         <%= pergunta.pergunta %> &nbsp;
         <div class="progress progress-alert">
-          <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_curso(@curso) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_curso(@curso), :precision => 1, :separator => ',' %></p></div>
+          <div class="bar" style="width: <%= number_to_percentage pergunta.media_por_coordenador(@curso) * 10, :precision => 0 %>;"><p>média <%= number_with_precision pergunta.media_por_coordenador(@curso), :precision => 1, :separator => ',' %></p></div>
         </div>
       </li>
     <% end %>

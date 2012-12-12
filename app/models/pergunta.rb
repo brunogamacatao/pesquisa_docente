@@ -44,6 +44,20 @@ class Pergunta < ActiveRecord::Base
     result["media"] || 0
   end
   
+  def media_por_coordenador(curso)
+    result = connection.select_one "SELECT AVG(r.nota) as media
+    FROM perguntas p
+    INNER JOIN dimensoes dim ON p.dimensao_id = dim.id AND dim.tipo = 1
+    INNER JOIN respostas r ON r.pergunta_id = p.id
+    INNER JOIN alunos a ON r.aluno_id = a.id
+    INNER JOIN alunos_turmas alt ON alt.aluno_id = a.id
+    INNER JOIN turmas t ON alt.turma_id = t.id
+    INNER JOIN disciplinas d ON t.disciplina_id = d.id
+    INNER JOIN cursos c ON d.curso_id = c.id
+    WHERE p.id = #{self.id} AND c.id = #{curso.id}"
+    result["media"] || 0
+  end
+  
   def media_por_turma(turma)
     result = connection.select_one "SELECT AVG(r.nota) as media
     FROM perguntas p

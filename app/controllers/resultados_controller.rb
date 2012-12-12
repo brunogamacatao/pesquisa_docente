@@ -77,7 +77,7 @@ class ResultadosController < ApplicationController
       format.html
       format.xls
       format.pdf do
-        pdf = ResultadoCursoPdf.new(@pesquisa, @dimensoes, @curso, view_context)
+        pdf = ResultadoCoordenadorPdf.new(@pesquisa, @dimensoes, @curso, view_context)
         send_data pdf.render, filename: "resultado_coord_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
       end # end format
     end
