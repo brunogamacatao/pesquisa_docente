@@ -58,3 +58,4 @@ gem 'cancan'
 gem 'carrierwave'
 gem "ckeditor"
 gem 'mini_magick'
+gem 'airbrake'

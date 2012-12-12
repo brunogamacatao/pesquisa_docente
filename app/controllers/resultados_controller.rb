@@ -68,7 +68,7 @@ class ResultadosController < ApplicationController
   
   def resultado_coordenador_curso
     @pesquisa  = Pesquisa.ativa(:order => 'created_at DESC').first
-    @dimensoes = @pesquisa.dimensoes.coordenador
+    @dimensoes = Dimensao.coordenador.where(:pesquisa_id => @pesquisa)
     @curso     = Curso.find(params[:id])
     
     authorize! :ver, @curso
@@ -76,6 +76,10 @@ class ResultadosController < ApplicationController
     respond_to do |format|
       format.html
       format.xls
+      format.pdf do
+        pdf = ResultadoCursoPdf.new(@pesquisa, @dimensoes, @curso, view_context)
+        send_data pdf.render, filename: "resultado_coord_#{@curso.nome}.pdf", type: "application/pdf", disposition: "inline"
+      end # end format
     end
   end
   

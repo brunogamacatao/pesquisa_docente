@@ -40,6 +40,12 @@ class CursoPresenter < BasePresenter
       :class => "btn btn-success"
   end
   
+  def botao_imprimir_coordenador
+    h.link_to 'Imprimir', 
+      {:action => :resultado_coordenador_curso, :id => curso.id, :format => :pdf}, 
+      :class => "btn btn-success"
+  end
+
   def botao_excel
     h.link_to 'Excel', 
       {:action => :resultado_por_curso, :id => curso.id, :format => :xls}, 

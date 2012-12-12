@@ -1,5 +1,5 @@
 <% content_for :titulo do %>Resultado do coordenador curso: <%= @curso.nome %><% end %>
-<% @pesquisa.dimensoes.coordenador.each do |dimensao| %>
+<% @dimensoes.each do |dimensao| %>
   <% dimensao.perguntas.each do |pergunta| %>
     <Row>
       <Cell><Data ss:Type="String"><%= pergunta.pergunta %></Data></Cell>
