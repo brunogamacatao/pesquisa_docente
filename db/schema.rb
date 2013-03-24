@@ -54,10 +54,10 @@ ActiveRecord::Schema.define(:version => 20121129033219) do
   end
 
   create_table "alunos_turmas", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
     t.integer  "aluno_id"
     t.integer  "turma_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "ckeditor_assets", :force => true do |t|
