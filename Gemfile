@@ -59,3 +59,4 @@ gem 'carrierwave'
 gem "ckeditor"
 gem 'mini_magick'
 gem 'airbrake'
+gem 'rails3-jquery-autocomplete'

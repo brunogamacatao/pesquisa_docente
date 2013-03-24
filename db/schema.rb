@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129033219) do
+ActiveRecord::Schema.define(:version => 20130324135744) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -182,6 +182,16 @@ ActiveRecord::Schema.define(:version => 20121129033219) do
     t.boolean  "ativa"
     t.integer  "tipo_resposta"
   end
+
+  create_table "professor_equivalentes", :force => true do |t|
+    t.integer  "professor_id"
+    t.integer  "disciplina_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "professor_equivalentes", ["disciplina_id"], :name => "index_professor_equivalentes_on_disciplina_id"
+  add_index "professor_equivalentes", ["professor_id"], :name => "index_professor_equivalentes_on_professor_id"
 
   create_table "professores", :force => true do |t|
     t.string   "nome"
