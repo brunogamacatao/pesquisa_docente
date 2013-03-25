@@ -30,6 +30,12 @@
       <% end %>
     <% end %>
   </fieldset>
+  <fieldset>
+    <legend>Observações</legend>
+    <%= hidden_field_tag "observacao[aluno_id]", @aluno.id %>
+    <%= hidden_field_tag "observacao[turma_id]", @turma.id %>
+    <%= text_area_tag "observacao[observacoes]", nil, :rows => 5, :cols => 80, :class => 'observacoes', :placeholder => 'Espaço reservado para observações adicionais sobre o desempenho do(a) Professor(a)'%>
+  </fieldset>
   <br/>
   <%= submit_tag 'Enviar Respostas', :class => 'btn btn-primary' %>
 <% end %>

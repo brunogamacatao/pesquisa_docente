@@ -7,4 +7,5 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'dimensao',    'dimensoes'
   inflect.irregular 'eleicao',     'eleicoes'
   inflect.irregular 'equivalente', 'equivalentes'
+  inflect.irregular 'observacao',  'observacoes'
 end

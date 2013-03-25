@@ -39,7 +39,7 @@ class ResponderPesquisaController < ApplicationController
       else # Caso contrário, a pesquisa está concluída
         # Verifica se ja respondeu a dimensão coordenador
         @dimensao_coordenador = @pesquisa.dimensoes.coordenador.first
-        if @aluno.respostas.joins(:pergunta).where('perguntas.dimensao_id = ?', @dimensao_coordenador.id).empty?
+        if @dimensao_coordenador and @aluno.respostas.joins(:pergunta).where('perguntas.dimensao_id = ?', @dimensao_coordenador.id).empty?
           render :iniciar_respostas_coordenador
         else
           flash[:sucesso] = 'Você concluiu a sua pesquisa com sucesso !'
@@ -59,6 +59,9 @@ class ResponderPesquisaController < ApplicationController
     params[:respostas].each do |k, resposta|
       Resposta.create(resposta)
     end
+    
+    Observacao.create(params[:observacao])
+    
     redirect_to :action => 'iniciar_respostas', :id => params[:id], :matricula => params[:matricula]
   end
   

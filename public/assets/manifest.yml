@@ -2,10 +2,11 @@
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
 active_admin.js: active_admin-aaaadc369668fe1ddbc4afc69732f67f.js
 application.js: application-7b965b02b59c586e6923c0813de1b5ab.js
+iniciar_respostas.js: iniciar_respostas-9b458cea936f32bb7d9ddb48110ba955.js
 iniciar_respostas_unicas.js: iniciar_respostas_unicas-dd9009581f9eadc01e7d9a816d3661e5.js
 responder_pesquisa.js: responder_pesquisa-478515fbac773c3bc425f2281e0dc629.js
 active_admin.css: active_admin-1eb7b9fe8c0306f69ffc9dad916fb1ab.css
-application.css: application-f67ce05b7ba4b71b427df2b3e9c6df0c.css
+application.css: application-37860587e8326dbcde010e1c3a7453fc.css
 ckeditor/application.js: ckeditor/application-83e6bb7625a30fc6ca17519f728f5381.js
 ckeditor/filebrowser/images/gal_add.jpg: ckeditor/filebrowser/images/gal_add-8aa905c95fad3086b6c3fc06bfb5b6d5.jpg
 ckeditor/filebrowser/images/gal_add.png: ckeditor/filebrowser/images/gal_add-54f9d6f12bd2ad0c7d7d6b6f9e07979a.png
