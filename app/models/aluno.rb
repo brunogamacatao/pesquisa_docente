@@ -36,4 +36,21 @@ class Aluno < ActiveRecord::Base
     total = self.turmas.count
     atual.to_f / total.to_f * 100.0 if total > 0
   end
+  
+  def concluiu_pesquisa?(pesquisa)
+    if self.turmas_falta_responder(pesquisa).empty? 
+      if not self.falta_responder_dimensao_coordenador?(pesquisa)
+        return true
+      end
+    end
+    return false
+  end
+  
+  def falta_responder_dimensao_coordenador?(pesquisa)
+    dimensao_coordenador = pesquisa.dimensoes.coordenador.first
+    if dimensao_coordenador and self.respostas.joins(:pergunta).where('perguntas.dimensao_id = ?', dimensao_coordenador.id).empty?
+      return true
+    end
+    return false
+  end
 end

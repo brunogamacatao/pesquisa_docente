@@ -1,15 +1,6 @@
 <% content_for :scripts do %>
   <%= javascript_include_tag "responder_pesquisa" %>
-<% end %>
-
-<h1><%= @pesquisa.nome %></h1>
-
-<br/>
-
-<%= form_tag({:action => "iniciar_respostas"}, {:class => 'well'}) do %>
-  <%= hidden_field_tag 'id', @pesquisa.id %>
-  <%= label_tag 'matricula', 'Matrícula' %>
-  <%= text_field_tag 'matricula', nil, :placeholder => 'Digite aqui a sua matrícula', :class => 'validate[required]' %>
-  <br/>
-  <%= submit_tag 'Responder Pesquisa', :class => 'btn' %>
+  <script>
+    $("#div_pesquisa_docente").dialog("close");
+  </script>
 <% end %>
