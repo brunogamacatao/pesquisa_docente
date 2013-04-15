@@ -60,3 +60,9 @@ gem "ckeditor"
 gem 'mini_magick'
 gem 'airbrake'
 gem 'rails3-jquery-autocomplete'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+end

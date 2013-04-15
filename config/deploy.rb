@@ -1,7 +1,7 @@
 require "bundler/capistrano"
 require "delayed/recipes"
 
-server "192.168.5.154", :web, :app, :db, :primary => true
+server "192.168.5.1", :web, :app, :db, :primary => true
 
 set :application, "pesquisa_docente"
 set :user, "deployer"
