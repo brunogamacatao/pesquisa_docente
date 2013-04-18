@@ -18,15 +18,15 @@ class Instituicao < ActiveRecord::Base
   validates :sigla, :uniqueness => true
   
   def alunos_faltam_responder
-    Aluno.where(:id => $redis.sdiff(self.redis_key(:alunos), self.redis_key(:alunos_responderam))).order(:nome)
+    0#Aluno.where(:id => $redis.sdiff(self.redis_key(:alunos), self.redis_key(:alunos_responderam))).order(:nome)
   end
   
   def total_alunos
-    $redis.scard(self.redis_key(:alunos))
+    0#$redis.scard(self.redis_key(:alunos))
   end
 
   def total_alunos_responderam
-    $redis.scard(self.redis_key(:alunos_responderam))
+    0#$redis.scard(self.redis_key(:alunos_responderam))
   end
   
   def percentual_responderam

@@ -52,7 +52,7 @@ gem 'activeadmin'
 gem "nested_form"
 gem "devise"
 gem 'gon'
-gem 'redis'
+#gem 'redis'
 gem 'prawn'
 gem 'cancan'
 gem 'carrierwave'
@@ -60,6 +60,7 @@ gem "ckeditor"
 gem 'mini_magick'
 gem 'airbrake'
 gem 'rails3-jquery-autocomplete'
+gem 'squeel'
 
 group :development do
   gem 'better_errors'
