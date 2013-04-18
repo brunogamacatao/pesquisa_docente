@@ -52,7 +52,7 @@ gem 'activeadmin'
 gem "nested_form"
 gem "devise"
 gem 'gon'
-#gem 'redis'
+gem 'redis'
 gem 'prawn'
 gem 'cancan'
 gem 'carrierwave'
