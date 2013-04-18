@@ -10,7 +10,7 @@ set :deploy_via, :remote_cache
 set :use_sudo, false
 
 set :scm, "git"
-set :repository, "git@github.com:brunogamacatao/#{application}.git"
+set :repository, "https://github.com/brunogamacatao/#{application}.git"
 set :branch, "master"
 set :rails_env, "production" #added for delayed job  
 
