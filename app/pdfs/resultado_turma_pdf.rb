@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*- 
 class ResultadoTurmaPdf < Prawn::Document
-  def initialize(pesquisa, dimensoes, turma, view)
+  def initialize(pesquisa, dimensoes, turma, observacoes, view)
     super(top_margin: 70)
-    @pesquisa  = pesquisa
-    @dimensoes = dimensoes
-    @turma     = turma
-    @view      = view
+    @pesquisa    = pesquisa
+    @dimensoes   = dimensoes
+    @turma       = turma
+    @observacoes = observacoes
+    @view        = view
     
     cabecalho
     tabela
@@ -61,6 +62,12 @@ class ResultadoTurmaPdf < Prawn::Document
     
     text "Total de alunos que responderam: #{@turma.total_alunos_responderam} (de um total de #{@turma.total_alunos}) (#{@view.number_to_percentage 100 * @turma.total_alunos_responderam / @turma.total_alunos, :precision => 0})", :size => 12, :style => :bold, :align => :center
     text "Média Geral -> #{formata_numero media_geral}", :size => 12, :style => :bold, :align => :center
+    if @observacoes.size > 0
+      text "Observações", :size => 12, :style => :bold, :align => :center
+      @observacoes.each do |obs|
+        text obs.observacoes, :size => 9, :align => :center
+      end
+    end
     move_down 10
   end
   

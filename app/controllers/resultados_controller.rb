@@ -92,7 +92,7 @@ class ResultadosController < ApplicationController
       format.html
       format.xls
       format.pdf do
-        pdf = ResultadoTurmaPdf.new(@pesquisa, @pesquisa.dimensoes, @turma, view_context)
+        pdf = ResultadoTurmaPdf.new(@pesquisa, @pesquisa.dimensoes, @turma, @observacoes, view_context)
         send_data pdf.render, filename: "resultado_#{@turma.disciplina.nome}.pdf", type: "application/pdf", disposition: "inline"
       end
     end
