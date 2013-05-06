@@ -1,11 +1,13 @@
 # encoding: utf-8
 class ResponderPesquisaController < ApplicationController
   def plugin
-    @pesquisa = Pesquisa.find(params[:id])
-    @aluno    = Aluno.where(:matricula => params[:matricula]).first
+    # @pesquisa = Pesquisa.find(params[:id])
+    # @aluno    = Aluno.where(:matricula => params[:matricula]).first
     
     respond_to do |format|
-      format.js
+      format.js do
+        render :js => ""
+      end
     end
   end
   
