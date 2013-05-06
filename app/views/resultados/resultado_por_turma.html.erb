@@ -33,3 +33,9 @@
 <div class="progress progress-alert">
   <div class="bar" style="width: <%= number_to_percentage @pesquisa.media_por_turma(@turma) * 10, :precision => 0 %>;"><p>média <%= number_with_precision @pesquisa.media_por_turma(@turma), :precision => 1, :separator => ',' %></p></div>
 </div>
+<% if @observacoes.size > 0 %>
+  <h4>Observações:</h4>
+  <% @observacoes.each do |obs| %>
+      <p><%= obs.observacoes %></p>
+  <% end %>
+<% end %>

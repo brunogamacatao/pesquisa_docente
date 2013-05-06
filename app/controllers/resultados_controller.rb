@@ -84,8 +84,9 @@ class ResultadosController < ApplicationController
   end
   
   def resultado_por_turma
-    @pesquisa = Pesquisa.ativa(:order => 'created_at DESC').first
-    @turma    = Turma.find(params[:id])
+    @pesquisa    = Pesquisa.ativa(:order => 'created_at DESC').first
+    @turma       = Turma.find(params[:id])
+    @observacoes = Observacao.where("turma_id = ? AND length(observacoes) > 0", @turma).all()
     
     respond_to do |format|
       format.html
